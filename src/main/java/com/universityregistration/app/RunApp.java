@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 //@EnableJpaRepositories({"com.universityregistration"})
 public class RunApp extends SpringBootServletInitializer {
 	public static void main(String[] args){
+		System.out.println("testing webhook");
 		SpringApplication.run(RunApp.class, args);
 	}
 	
