@@ -44,8 +44,10 @@
 		</dependency>
 		<!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-compatibility-server</artifactId> 
 			<version>8.0.2</version> </dependency> -->
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> 
-			</dependency> -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>UniversityRegistrationApp</finalName>
