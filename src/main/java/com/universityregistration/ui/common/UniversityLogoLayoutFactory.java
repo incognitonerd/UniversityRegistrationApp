@@ -1,4 +1,5 @@
-package com.universityregistration.ui;
+package com.universityregistration.ui.common;
+import com.universityregistration.utils.constants.Constants;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -12,17 +13,16 @@ public class UniversityLogoLayoutFactory implements UIComponentBuilder {
 		
 		public LogoLayout init(){
 			logo = new Embedded();
-			logo.setSource(new ThemeResource("../vaadin/images/uwfBanner.png"));
+			logo.setSource(new ThemeResource(Constants.LOGO_BANNER.getString()));
 			logo.setWidth("100%");
-			logo.setHeight("20%");
-			// logo.setWidth("398px");
-			// logo.setHeight("241px");
+			logo.setHeight("100%");
 			return this;
 		}
 		
 		public LogoLayout layout(){
 			addComponent(logo);
 			setComponentAlignment(logo, Alignment.MIDDLE_CENTER);
+			setMargin(false);
 			return this;
 		}
 	}

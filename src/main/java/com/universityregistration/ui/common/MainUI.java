@@ -1,9 +1,13 @@
-package com.universityregistration.ui;
+package com.universityregistration.ui.common;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import com.universityregistration.ui.navigator.UniversityNavigator;
+import com.universityregistration.ui.students.StudentLayoutFactory;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,11 +19,15 @@ import com.vaadin.ui.VerticalLayout;
 @Title("University App")
 @Theme("valo")
 public class MainUI extends UI {
-	@Autowired
-	private UniversityLogoLayoutFactory universeLogoLayoutFactory;
-	@Autowired
-	private UniversityMenuFactory universeMenuFactory;
 	public static final String NAME = "/ui";
+	@Autowired
+	private UniversityLogoLayoutFactory universityLogoLayoutFactory;
+	@Autowired
+	private UniversityMenuFactory universityMenuFactory;
+	@Autowired
+	private ApplicationContext appContext;
+	@Autowired
+	private SpringViewProvider viewProvider;
 	private Panel changeTab;
 	
 	// entry point of the application
@@ -30,23 +38,20 @@ public class MainUI extends UI {
 		 */
 		changeTab = new Panel();
 		changeTab.setHeight("100%");
-		// changeTab.setWidth("50%");
-		//changeTab.setWidthUndefined();
 		VerticalLayout rL = new VerticalLayout();
 		rL.setSizeFull();
 		rL.setMargin(true);
-		Panel contentPanel = new Panel();
-		contentPanel.setWidth("75%");
-		contentPanel.setHeight("100%");
-		//contentPanel.setHeightUndefined();
 		Panel logoPanel = new Panel();
 		logoPanel.setWidth("75%");
 		logoPanel.setHeightUndefined();
+		Panel contentPanel = new Panel();
+		contentPanel.setWidth("75%");
+		contentPanel.setHeight("100%");
 		HorizontalLayout hL = new HorizontalLayout();
 		hL.setSizeFull();
 		hL.setMargin(true);
-		Component logo = universeLogoLayoutFactory.createComponent();
-		Component menu = universeMenuFactory.createComponent();
+		Component logo = universityLogoLayoutFactory.createComponent();
+		Component menu = universityMenuFactory.createComponent();
 		hL.addComponent(menu);
 		hL.addComponent(changeTab);
 		hL.setComponentAlignment(changeTab, Alignment.TOP_CENTER);
@@ -60,6 +65,14 @@ public class MainUI extends UI {
 		rL.setComponentAlignment(contentPanel, Alignment.MIDDLE_CENTER);
 		rL.setComponentAlignment(logoPanel, Alignment.TOP_CENTER);
 		rL.setExpandRatio(contentPanel, 1);
+		initNavigator();
 		setContent(rL);
+	}
+	
+	private void initNavigator(){
+		UniversityNavigator nav = new UniversityNavigator(this, changeTab);
+		appContext.getAutowireCapableBeanFactory().autowireBean(nav);
+		nav.addProvider(viewProvider);
+		nav.navigateTo(StudentLayoutFactory.NAME);
 	}
 }

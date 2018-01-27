@@ -1,4 +1,4 @@
-package com.universityregistration.ui;
+package com.universityregistration.ui.common;
 import com.vaadin.ui.Component;
 
 public interface UIComponentBuilder {

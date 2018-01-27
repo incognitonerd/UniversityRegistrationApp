@@ -43,14 +43,19 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-compatibility-server</artifactId> 
-			<version>8.0.2</version> </dependency> -->
+			<version>8.0.2</version> </dependency> 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
+		</dependency>-->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-base</artifactId>
+			<version>r03</version>
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>UniversityRegistrationApp</finalName>
+		<finalName>ZaysUniversityRegistrationApp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
