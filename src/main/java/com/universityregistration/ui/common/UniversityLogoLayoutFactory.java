@@ -13,7 +13,7 @@ public class UniversityLogoLayoutFactory implements UIComponentBuilder {
 		
 		public LogoLayout init(){
 			logo = new Embedded();
-			logo.setSource(new ThemeResource(Constants.LOGO_BANNER.getString()));
+			logo.setSource(new ThemeResource(Constants.LOGO_BANNER.getStr()));
 			logo.setWidth("100%");
 			logo.setHeight("100%");
 			return this;

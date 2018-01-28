@@ -14,6 +14,7 @@ public class UniversityNavigator extends Navigator {
 			UniversityNavigator.getNavigator().navigateTo(path);
 		} catch(Exception e){
 			e.printStackTrace();
+			return;
 		}
 	}
 	
