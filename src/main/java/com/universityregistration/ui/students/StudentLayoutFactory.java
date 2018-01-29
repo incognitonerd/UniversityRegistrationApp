@@ -14,6 +14,8 @@ import com.vaadin.ui.VerticalLayout;
 public class StudentLayoutFactory extends VerticalLayout implements View {
 	public static final String NAME = "addstudent";
 	private TabSheet tabSheet;
+	Component showStudentsTab;
+	Component addStudentTab;
 	@Autowired
 	private AddStudentMainLayoutFactory asmlf;
 	
@@ -27,8 +29,8 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 		// Component addStudentTab = new Label("main menu tab");
-		Component showStudentsTab = new Label("show students tab");
-		Component addStudentTab = asmlf.createComponent();
+		showStudentsTab = new Label("show students tab");
+		addStudentTab = asmlf.createComponent();
 		tabSheet.addTab(addStudentTab, Constants.STUDENT_MAIN_MENU.getStr());
 		tabSheet.addTab(showStudentsTab, Constants.STUDENT_SHOW_ALL_STUDENTS.getStr());
 		addComponent(tabSheet);

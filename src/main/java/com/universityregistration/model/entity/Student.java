@@ -3,19 +3,32 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+// @Entity
+// @Table(name = "Students")
 public class Student {
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	// @Column(name = "id")
 	private Integer id;
-	@NotNull(message = "Cannot be blank!")
+	//@NotNull(message = "Cannot be blank!")
+	// @Column(name = "first_name")
 	private String fName;
-	@NotNull(message = "Cannot be blank!")
+	//@NotNull(message = "Cannot be blank!")
+	// @Column(name = "last_name")
 	private String lName;
-	@NotNull(message = "Cannot be blank!")
-	@Min(value = 0, message = "Minimum age is 0!")
-	@Max(value = 150, message = "Maximum age is 150!")
+	//@NotNull(message = "Cannot be blank!")
+	//@Min(value = 0, message = "Minimum age is 0!")
+	//@Max(value = 150, message = "Maximum age is 150!")
+	// @Column(name = "age")
 	private Integer age;
-	@NotNull(message = "Cannot be blank!")
+	//@NotNull(message = "Cannot be blank!")
+	// @Column(name = "gender")
 	private String gender;
 	
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "university_id")
+	// @NotNull(message = "Cannot be blank!")
+	// private University university;
 	public Student(){
 	}
 	
@@ -61,7 +74,7 @@ public class Student {
 	
 	@Override
 	public String toString(){
-		// TODO Auto-generated method stub
-		return fName + " - " + lName + " - " + age;
+		return " firstName - " + this.fName + " lastName - " + this.lName + " age - " + this.age + " gender - "
+				+ this.gender;
 	}
 }

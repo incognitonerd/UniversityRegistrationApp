@@ -11,6 +11,6 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 	public static final String NAME = "operations";
 	
 	public void enter(ViewChangeEvent event){
-		addComponent(new Label("University Layout..."));
+		addComponent(new Label("Operations Layout..."));
 	}
 }

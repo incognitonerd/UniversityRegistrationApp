@@ -20,6 +20,13 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("valo")
 public class MainUI extends UI {
 	public static final String NAME = "/ui";
+	Component logo;
+	Component menu;
+	VerticalLayout rL;
+	Panel logoPanel;
+	Panel contentPanel;
+	HorizontalLayout hL;
+	UniversityNavigator nav;
 	@Autowired
 	private UniversityLogoLayoutFactory universityLogoLayoutFactory;
 	@Autowired
@@ -38,20 +45,20 @@ public class MainUI extends UI {
 		 */
 		changeTab = new Panel();
 		changeTab.setHeight("100%");
-		VerticalLayout rL = new VerticalLayout();
+		rL = new VerticalLayout();
 		rL.setSizeFull();
 		rL.setMargin(true);
-		Panel logoPanel = new Panel();
+		logoPanel = new Panel();
 		logoPanel.setWidth("75%");
 		logoPanel.setHeightUndefined();
-		Panel contentPanel = new Panel();
+		contentPanel = new Panel();
 		contentPanel.setWidth("75%");
 		contentPanel.setHeight("100%");
-		HorizontalLayout hL = new HorizontalLayout();
+		hL = new HorizontalLayout();
 		hL.setSizeFull();
 		hL.setMargin(true);
-		Component logo = universityLogoLayoutFactory.createComponent();
-		Component menu = universityMenuFactory.createComponent();
+		logo = universityLogoLayoutFactory.createComponent();
+		menu = universityMenuFactory.createComponent();
 		hL.addComponent(menu);
 		hL.addComponent(changeTab);
 		hL.setComponentAlignment(changeTab, Alignment.TOP_CENTER);
@@ -70,7 +77,7 @@ public class MainUI extends UI {
 	}
 	
 	private void initNavigator(){
-		UniversityNavigator nav = new UniversityNavigator(this, changeTab);
+		nav = new UniversityNavigator(this, changeTab);
 		appContext.getAutowireCapableBeanFactory().autowireBean(nav);
 		nav.addProvider(viewProvider);
 		nav.navigateTo(StudentLayoutFactory.NAME);

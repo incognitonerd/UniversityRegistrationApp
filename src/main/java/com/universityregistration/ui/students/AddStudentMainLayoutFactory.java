@@ -1,17 +1,16 @@
 package com.universityregistration.ui.students;
 import java.util.ArrayList;
-import java.util.List;
 import com.universityregistration.model.entity.Student;
 import com.universityregistration.utils.constants.Constants;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -42,13 +41,14 @@ public class AddStudentMainLayoutFactory {
 			// age.setNullRepresentation("");
 			fName.setValue(" ");
 			lName.setValue(" ");
+			age.setValue(" ");
 			save = new Button(Constants.SAVE.getStr());
 			clear = new Button(Constants.CLEAR.getStr());
 			save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			clear.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			clear.addClickListener(this);
 			save.addClickListener(this);
-			List<String> genders = new ArrayList<>();
+			ArrayList<String> genders = new ArrayList<>();
 			genders.add(new String(Constants.FEMALE.getStr()));
 			genders.add(new String(Constants.MALE.getStr()));
 			gender.setItems(genders);
@@ -58,9 +58,22 @@ public class AddStudentMainLayoutFactory {
 		public AddStudentMainLayout bind(){
 			// fieldGroup.bindInstanceFields(this);
 			// fieldGroup.w
-			binder.forField(fName).withNullRepresentation("").bind("fName");
-			binder.forField(lName).withNullRepresentation("").bind("lName");
 			// binder.forField(fName).withNullRepresentation("").bind("fName");
+			// binder.forField(lName).withNullRepresentation("").bind("lName");
+			// binder.forField(fName).withNullRepresentation("").bind("fName");
+			// binder.bind(lName, Student::getlName, Student::setlName);
+			/*
+			 * binder.withValidator(name->name.length() >= 3, "Full name must contain at least three characters").bind( Person::getName, Person::setName);
+			 */
+			binder.forField(fName).withNullRepresentation(" ").withValidator(fName->fName.length() >= 0, "Cannot be blank!")
+					.bind(Student::getfName, Student::setfName);
+			binder.forField(lName).withNullRepresentation(" ").withValidator(lName->lName.length() >= 0, "Cannot be blank!")
+					.bind(Student::getlName, Student::setlName);
+			binder.forField(age).withNullRepresentation(" ").withConverter(new StringToIntegerConverter("Must be Integer"))
+					.withValidator(age->age > 0, "Cannot be blank!").bind(Student::getAge, Student::setAge);
+			binder.forField(gender).withNullRepresentation(" ")
+					.withValidator(gender->gender.length() >= 0, "Cannot be blank!")
+					.bind(Student::getGender, Student::setGender);
 			binder.setBean(student);
 			return this;
 		}
@@ -90,7 +103,10 @@ public class AddStudentMainLayoutFactory {
 		}
 		
 		private void clearFields(){
-			Notification.show("In the clear");
+			// Notification.show("In the clear");
+			/*
+			 * fName.clear(); lName.clear(); age.clear(); gender.clear();
+			 */
 			fName.setValue("");
 			lName.setValue("");
 			age.setValue("");
@@ -99,10 +115,11 @@ public class AddStudentMainLayoutFactory {
 		
 		private void saveStudent(){
 			try{
+				// Notification.show("In the save");
+				// binder.writeBeanIfValid(student);
 				binder.writeBean(student);
-				Notification.show("In the save");
 			} catch(ValidationException e){
-				e.printStackTrace();
+				// e.printStackTrace();
 				return;
 			}
 		}
