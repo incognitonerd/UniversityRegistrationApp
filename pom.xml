@@ -50,7 +50,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>UniversityRegistrationApp</finalName>
+		<finalName>ZaysUniversityRegistrationApp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

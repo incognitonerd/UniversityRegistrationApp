@@ -11,6 +11,8 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -56,22 +58,14 @@ public class AddStudentMainLayoutFactory {
 		}
 		
 		public AddStudentMainLayout bind(){
-			// fieldGroup.bindInstanceFields(this);
-			// fieldGroup.w
-			// binder.forField(fName).withNullRepresentation("").bind("fName");
-			// binder.forField(lName).withNullRepresentation("").bind("lName");
-			// binder.forField(fName).withNullRepresentation("").bind("fName");
-			// binder.bind(lName, Student::getlName, Student::setlName);
-			/*
-			 * binder.withValidator(name->name.length() >= 3, "Full name must contain at least three characters").bind( Person::getName, Person::setName);
-			 */
-			binder.forField(fName).withNullRepresentation(" ").withValidator(fName->fName.length() >= 0, "Cannot be blank!")
+			binder.forField(fName).withNullRepresentation("").withValidator(fName->fName.length() >= 0, "Cannot be blank!")
 					.bind(Student::getfName, Student::setfName);
-			binder.forField(lName).withNullRepresentation(" ").withValidator(lName->lName.length() >= 0, "Cannot be blank!")
+			binder.forField(lName).withNullRepresentation("").withValidator(lName->lName.length() >= 0, "Cannot be blank!")
 					.bind(Student::getlName, Student::setlName);
-			binder.forField(age).withNullRepresentation(" ").withConverter(new StringToIntegerConverter("Must be Integer"))
-					.withValidator(age->age > 0, "Cannot be blank!").bind(Student::getAge, Student::setAge);
-			binder.forField(gender).withNullRepresentation(" ")
+			binder.forField(age).withNullRepresentation("").withConverter(new StringToIntegerConverter(age.toString()))
+					.withValidator(age->age == null, "Cannot be blank!").withValidator(age->age > 0, "Invalid Age")
+					.bind(Student::getAge, Student::setAge);
+			binder.forField(gender).withNullRepresentation("")
 					.withValidator(gender->gender.length() >= 0, "Cannot be blank!")
 					.bind(Student::getGender, Student::setGender);
 			binder.setBean(student);
@@ -89,7 +83,7 @@ public class AddStudentMainLayoutFactory {
 			gL.addComponent(gender, 1, 1);
 			// gL.addComponent(unis, 0, 2, 1, 2);
 			gL.addComponent(new HorizontalLayout(clear, save), 0, 2);
-			// age.clear();
+			age.clear();
 			return gL;
 		}
 		
@@ -119,9 +113,12 @@ public class AddStudentMainLayoutFactory {
 				// binder.writeBeanIfValid(student);
 				binder.writeBean(student);
 			} catch(ValidationException e){
-				// e.printStackTrace();
+				Notification.show(Constants.ERROR.getStr(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getStr(),
+						Type.ERROR_MESSAGE);
 				return;
 			}
+			Notification.show("how did it make it here");
+			clearFields();
 		}
 	}
 	
