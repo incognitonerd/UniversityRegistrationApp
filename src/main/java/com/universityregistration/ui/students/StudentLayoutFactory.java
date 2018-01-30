@@ -4,6 +4,7 @@ import com.universityregistration.ui.common.MainUI;
 import com.universityregistration.utils.constants.Constants;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -29,7 +30,8 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 		// Component addStudentTab = new Label("main menu tab");
-		showStudentsTab = new Label("show students tab");
+		//showStudentsTab = new Label("show students tab\nsomeone asked if im really bulding this web app\n\t\t\t-Zay");
+		showStudentsTab = new Label("show students tab<br>is this really zays web app?", ContentMode.HTML);
 		addStudentTab = asmlf.createComponent();
 		tabSheet.addTab(addStudentTab, Constants.STUDENT_MAIN_MENU.getStr());
 		tabSheet.addTab(showStudentsTab, Constants.STUDENT_SHOW_ALL_STUDENTS.getStr());

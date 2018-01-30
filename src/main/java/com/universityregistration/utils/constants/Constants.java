@@ -4,7 +4,7 @@ public enum Constants{
 			"Remove Student"), MENU_OPERATIONS("Operations"), LOGO_BANNER("../vaadin/images/uwfBanner.png"), STUDENT_MAIN_MENU(
 			"MAIN MENU"), STUDENT_SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), FIRST_NAME("First Name"), LAST_NAME("Last Name"), AGE(
 			"Age"), GENDER("Gender"), SAVE("Save"), FEMALE("Female"), CLEAR("Clear"), MALE("Male"), ERROR("Error!"), STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION(
-			"Fields Cannot Be Blank!");
+			"Please Check The Fields"), SAVE_SUCCESSFUL("Successfully Saved!");
 	private final String string;
 	
 	private Constants(String string){

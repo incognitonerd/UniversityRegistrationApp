@@ -5,6 +5,7 @@ import com.universityregistration.utils.constants.Constants;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
@@ -38,12 +39,6 @@ public class AddStudentMainLayoutFactory {
 			gender = new ComboBox<String>(Constants.GENDER.getStr());
 			// unis = new ComboBox(UniversityAttributes.UNIVERSITY.getStr());
 			// unis.setWidth("100%");
-			// fname.setNullRepresentation("");
-			// lName.setNullRepresentation("");
-			// age.setNullRepresentation("");
-			fName.setValue(" ");
-			lName.setValue(" ");
-			age.setValue(" ");
 			save = new Button(Constants.SAVE.getStr());
 			clear = new Button(Constants.CLEAR.getStr());
 			save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -63,8 +58,7 @@ public class AddStudentMainLayoutFactory {
 			binder.forField(lName).withNullRepresentation("").withValidator(lName->lName.length() >= 0, "Cannot be blank!")
 					.bind(Student::getlName, Student::setlName);
 			binder.forField(age).withNullRepresentation("").withConverter(new StringToIntegerConverter(age.toString()))
-					.withValidator(age->age == null, "Cannot be blank!").withValidator(age->age > 0, "Invalid Age")
-					.bind(Student::getAge, Student::setAge);
+					.withValidator(age->age > 0 || age == null, "Invalid Age").bind(Student::getAge, Student::setAge);
 			binder.forField(gender).withNullRepresentation("")
 					.withValidator(gender->gender.length() >= 0, "Cannot be blank!")
 					.bind(Student::getGender, Student::setGender);
@@ -97,10 +91,6 @@ public class AddStudentMainLayoutFactory {
 		}
 		
 		private void clearFields(){
-			// Notification.show("In the clear");
-			/*
-			 * fName.clear(); lName.clear(); age.clear(); gender.clear();
-			 */
 			fName.setValue("");
 			lName.setValue("");
 			age.setValue("");
@@ -108,16 +98,21 @@ public class AddStudentMainLayoutFactory {
 		}
 		
 		private void saveStudent(){
+			Notification n;
 			try{
-				// Notification.show("In the save");
-				// binder.writeBeanIfValid(student);
 				binder.writeBean(student);
 			} catch(ValidationException e){
-				Notification.show(Constants.ERROR.getStr(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE);
+				n = new Notification(Constants.ERROR.getStr(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getStr(),
+						Type.ERROR_MESSAGE, true);
+				n.setDelayMsec(200000);
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
 				return;
 			}
-			Notification.show("how did it make it here");
+			n = new Notification(Constants.SAVE_SUCCESSFUL.getStr(), Type.WARNING_MESSAGE);
+			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.setDelayMsec(200000);
+			n.show(Page.getCurrent());
 			clearFields();
 		}
 	}
