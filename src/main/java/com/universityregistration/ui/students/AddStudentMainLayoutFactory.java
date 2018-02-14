@@ -1,13 +1,17 @@
 package com.universityregistration.ui.students;
-import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.universityregistration.model.entity.Student;
-import com.universityregistration.utils.constants.Constants;
-import com.vaadin.data.Binder;
-import com.vaadin.data.ValidationException;
-import com.vaadin.data.converter.StringToIntegerConverter;
+import com.universityregistration.model.entity.University;
+import com.universityregistration.services.AddStudentService;
+import com.universityregistration.services.ShowAllUniversitiesService;
+import com.universityregistration.utils.Constants;
+import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -20,104 +24,143 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class AddStudentMainLayoutFactory {
-	public class AddStudentMainLayout extends VerticalLayout implements Button.ClickListener {
-		private TextField fName;
-		private TextField lName;
+	private class AddStudentMainLayout extends VerticalLayout implements ClickListener {
+		private static final long serialVersionUID = 1L;
+		private TextField firstName;
+		private TextField lastName;
 		private TextField age;
-		private ComboBox<String> gender;
-		private Button save;
-		private Button clear;
-		private Binder<Student> binder;
+		private ComboBox gender;
+		private Button saveButton;
+		private Button clearButton;
+		private ComboBox university;
+		private StudentSavedListener studentSavedListener;
+		private BeanFieldGroup<Student> fieldGroup;
 		private Student student;
 		
+		public AddStudentMainLayout(StudentSavedListener studentSavedListener){
+			this.studentSavedListener = studentSavedListener;
+			this.student = new Student();
+		}
+		
 		public AddStudentMainLayout init(){
-			student = new Student();
-			binder = new Binder<Student>(Student.class);
-			fName = new TextField(Constants.FIRST_NAME.getStr());
-			lName = new TextField(Constants.LAST_NAME.getStr());
-			age = new TextField(Constants.AGE.getStr());
-			gender = new ComboBox<String>(Constants.GENDER.getStr());
-			// unis = new ComboBox(UniversityAttributes.UNIVERSITY.getStr());
-			// unis.setWidth("100%");
-			save = new Button(Constants.SAVE.getStr());
-			clear = new Button(Constants.CLEAR.getStr());
-			save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			clear.setStyleName(ValoTheme.BUTTON_PRIMARY);
-			clear.addClickListener(this);
-			save.addClickListener(this);
-			ArrayList<String> genders = new ArrayList<>();
-			genders.add(new String(Constants.FEMALE.getStr()));
-			genders.add(new String(Constants.MALE.getStr()));
-			gender.setItems(genders);
+			fieldGroup = new BeanFieldGroup<Student>(Student.class);
+			firstName = new TextField(Constants.FIRST_NAME.getString());
+			lastName = new TextField(Constants.LAST_NAME.getString());
+			age = new TextField(Constants.AGE.getString());
+			gender = new ComboBox(Constants.GENDER.getString());
+			university = new ComboBox(Constants.UNIVERSITY.getString());
+			university.setWidth("100%");
+			firstName.setNullRepresentation("");
+			lastName.setNullRepresentation("");
+			age.setNullRepresentation("");
+			saveButton = new Button(Constants.SAVE.getString());
+			clearButton = new Button(Constants.CANCEL.getString());
+			clearButton.addClickListener(this);
+			saveButton.addClickListener(this);
+			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			clearButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			gender.addItem(Constants.MALE.getString());
+			gender.addItem(Constants.FEMALE.getString());
 			return this;
 		}
 		
 		public AddStudentMainLayout bind(){
-			binder.forField(fName).withNullRepresentation("").withValidator(fName->fName.length() >= 0, "Cannot be blank!")
-					.bind(Student::getfName, Student::setfName);
-			binder.forField(lName).withNullRepresentation("").withValidator(lName->lName.length() >= 0, "Cannot be blank!")
-					.bind(Student::getlName, Student::setlName);
-			binder.forField(age).withNullRepresentation("").withConverter(new StringToIntegerConverter(age.toString()))
-					.withValidator(age->age > 0 || age == null, "Invalid Age").bind(Student::getAge, Student::setAge);
-			binder.forField(gender).withNullRepresentation("")
-					.withValidator(gender->gender.length() >= 0, "Cannot be blank!")
-					.bind(Student::getGender, Student::setGender);
-			binder.setBean(student);
+			fieldGroup.bindMemberFields(this);
+			fieldGroup.setItemDataSource(student);
 			return this;
 		}
 		
 		public Component layout(){
 			setMargin(true);
-			GridLayout gL = new GridLayout(2, 3);
-			gL.setSizeUndefined();
-			gL.setSpacing(true);
-			gL.addComponent(fName, 0, 0);
-			gL.addComponent(lName, 1, 0);
-			gL.addComponent(age, 0, 1);
-			gL.addComponent(gender, 1, 1);
-			// gL.addComponent(unis, 0, 2, 1, 2);
-			gL.addComponent(new HorizontalLayout(clear, save), 0, 2);
+			GridLayout layout = new GridLayout(2, 4);
+			layout.setSizeUndefined();
+			layout.setSpacing(true);
+			layout.addComponent(firstName, 0, 0);
+			layout.addComponent(lastName, 1, 0);
+			layout.addComponent(age, 0, 1);
+			layout.addComponent(gender, 1, 1);
+			layout.addComponent(university, 0, 2, 1, 2);
+			layout.addComponent(new HorizontalLayout(clearButton, saveButton), 0, 3);
 			age.clear();
-			return gL;
+			return layout;
 		}
 		
-		@Override
 		public void buttonClick(ClickEvent event){
-			if(event.getButton() == this.save){
-				saveStudent();
+			if(event.getSource() == this.saveButton){
+				save();
 			} else{
 				clearFields();
 			}
 		}
 		
 		private void clearFields(){
-			fName.setValue("");
-			lName.setValue("");
-			age.setValue("");
-			gender.setValue("");
+			firstName.setValue(null);
+			lastName.setValue(null);
+			age.setValue(null);
+			gender.setValue(null);
+			university.setValue(null);
+		}
+		
+		private void save(){
+			Notification n;
+			if(!isOperationValid()){
+				/*
+				 * Notification.show(NotificationMessages.STUDENT_SAVE_ERROR_TITLE.getString(), NotificationMessages.STUDENT_SAVE_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE);
+				 */
+				n = new Notification(Constants.ERROR.getString(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(),
+						Type.ERROR_MESSAGE, true);
+				n.setDelayMsec(200000);
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
+			} else{
+				saveStudent();
+			}
 		}
 		
 		private void saveStudent(){
 			Notification n;
 			try{
-				binder.writeBean(student);
-			} catch(ValidationException e){
-				n = new Notification(Constants.ERROR.getStr(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getStr(),
+				fieldGroup.commit();
+			} catch(CommitException e){
+				/*
+				 * Notification.show(NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_TITLE.getString(), NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE);
+				 */
+				n = new Notification(Constants.ERROR.getString(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(),
 						Type.ERROR_MESSAGE, true);
 				n.setDelayMsec(200000);
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 				n.show(Page.getCurrent());
 				return;
 			}
-			n = new Notification(Constants.SAVE_SUCCESSFUL.getStr(), Type.WARNING_MESSAGE);
+			addStudentService.saveStudent(student);
+			studentSavedListener.studentSaved();
+			/*
+			 * Notification.show(NotificationMessages.STUDENT_SAVE_SUCCESS_TITLE.getString(), NotificationMessages.STUDENT_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
+			 */
+			n = new Notification(Constants.SAVE_SUCCESSFUL.getString(), Type.WARNING_MESSAGE);
 			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 			n.setDelayMsec(200000);
 			n.show(Page.getCurrent());
 			clearFields();
 		}
+		
+		public AddStudentMainLayout load(){
+			List<University> universities = showAllUniversitiesService.getAllUniversities();
+			university.addItems(universities);
+			return this;
+		}
 	}
 	
-	public Component createComponent(){
-		return new AddStudentMainLayout().init().bind().layout();
+	private boolean isOperationValid(){
+		return showAllUniversitiesService.getAllUniversities().size() != 0;
+	}
+	
+	@Autowired
+	private AddStudentService addStudentService;
+	@Autowired
+	private ShowAllUniversitiesService showAllUniversitiesService;
+	
+	public Component createComponent(StudentSavedListener studentSavedListener){
+		return new AddStudentMainLayout(studentSavedListener).init().load().bind().layout();
 	}
 }
