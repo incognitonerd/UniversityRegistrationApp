@@ -73,7 +73,7 @@ public class AddStudentMainLayoutFactory {
 		public Component layout(){
 			setMargin(true);
 			GridLayout layout = new GridLayout(2, 4);
-			layout.setSizeUndefined();
+			//layout.setSizeUndefined();
 			layout.setSpacing(true);
 			layout.addComponent(firstName, 0, 0);
 			layout.addComponent(lastName, 1, 0);

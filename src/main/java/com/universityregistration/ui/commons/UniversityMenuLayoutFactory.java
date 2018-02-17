@@ -9,17 +9,17 @@ import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-public class UniversityMenuFactory implements UIComponentBuilder {
-	private class UniversMenu extends VerticalLayout implements Property.ValueChangeListener {
+public class UniversityMenuLayoutFactory implements UIComponentBuilder {
+	private class UniversityMenu extends VerticalLayout implements Property.ValueChangeListener {
 		private Tree mainMenu;
 		
-		public UniversMenu init(){
+		public UniversityMenu init(){
 			mainMenu = new Tree();
 			mainMenu.addValueChangeListener(this);
 			return this;
 		}
 		
-		public UniversMenu layout(){
+		public UniversityMenu layout(){
 			setWidth("100%");
 			setHeight("100%");
 			setMargin(false);
@@ -42,14 +42,18 @@ public class UniversityMenuFactory implements UIComponentBuilder {
 		
 		public void valueChange(ValueChangeEvent event){
 			String selectedItemPath = (String) event.getProperty().getValue();
-			if(selectedItemPath == null)
+			if(selectedItemPath.compareToIgnoreCase("add student") == 0
+					|| selectedItemPath.compareToIgnoreCase("remove student") == 0
+					|| selectedItemPath.compareToIgnoreCase("add university") == 0){
+				String path = selectedItemPath.toLowerCase().replaceAll("\\s+", "");
+				UniversityNavigator.navigate(path);
+			} else{
 				return;
-			String path = selectedItemPath.toLowerCase().replaceAll("\\s+", "");
-			UniversityNavigator.navigate(path);
+			}
 		}
 	}
 	
 	public Component createComponent(){
-		return new UniversMenu().init().layout();
+		return new UniversityMenu().init().layout();
 	}
 }

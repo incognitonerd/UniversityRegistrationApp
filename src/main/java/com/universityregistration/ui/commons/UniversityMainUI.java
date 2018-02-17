@@ -32,9 +32,9 @@ public class UniversityMainUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 	@Autowired
-	private UniversityMenuFactory menuFactory;
+	private UniversityMenuLayoutFactory menuFactory;
 	@Autowired
-	private UniversityLogoLayoutFactory logoFactory;
+	private UniversityLogoPanelLayoutFactory logoFactory;
 	private Panel changeTab;
 	
 	// entry point of the application

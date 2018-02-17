@@ -8,7 +8,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-public class UniversityLogoLayoutFactory implements UIComponentBuilder {
+public class UniversityLogoPanelLayoutFactory implements UIComponentBuilder {
 	private class LogoLayout extends VerticalLayout {
 		private Embedded logo;
 		

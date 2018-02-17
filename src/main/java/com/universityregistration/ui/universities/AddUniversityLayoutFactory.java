@@ -59,7 +59,7 @@ public class AddUniversityLayoutFactory {
 		public Component layout(){
 			setWidth("100%");
 			GridLayout grid = new GridLayout(2, 4);
-			grid.setHeightUndefined();
+			//grid.setHeightUndefined();
 			grid.setSpacing(true);
 			grid.addComponent(universityName, 0, 0, 1, 0);
 			grid.addComponent(universityCountry, 0, 1, 1, 1);
@@ -111,7 +111,7 @@ public class AddUniversityLayoutFactory {
 		}
 		
 		private boolean isOperationInValid(){
-			return universityName.isEmpty() && universityCountry.isEmpty() && universityCity.isEmpty();
+			return universityName.isEmpty() || universityCountry.isEmpty() || universityCity.isEmpty();
 		}
 		
 		private void clearFields(){
