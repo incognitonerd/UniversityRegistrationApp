@@ -91,7 +91,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-		<finalName>Aruba</finalName>
+		<finalName>boston</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

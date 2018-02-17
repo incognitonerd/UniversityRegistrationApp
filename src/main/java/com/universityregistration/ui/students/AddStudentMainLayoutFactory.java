@@ -31,7 +31,7 @@ public class AddStudentMainLayoutFactory {
 		private TextField age;
 		private ComboBox gender;
 		private Button saveButton;
-		private Button clearButton;
+		private Button cancelButton;
 		private ComboBox university;
 		private StudentSavedListener studentSavedListener;
 		private BeanFieldGroup<Student> fieldGroup;
@@ -44,23 +44,23 @@ public class AddStudentMainLayoutFactory {
 		
 		public AddStudentMainLayout init(){
 			fieldGroup = new BeanFieldGroup<Student>(Student.class);
-			firstName = new TextField(Constants.FIRST_NAME.getString());
-			lastName = new TextField(Constants.LAST_NAME.getString());
-			age = new TextField(Constants.AGE.getString());
-			gender = new ComboBox(Constants.GENDER.getString());
-			university = new ComboBox(Constants.UNIVERSITY.getString());
+			firstName = new TextField(Constants.ADD_STUDENT_FIRST_NAME.getStr());
+			lastName = new TextField(Constants.ADD_STUDENT_LAST_NAME.getStr());
+			age = new TextField(Constants.ADD_STUDENT_AGE.getStr());
+			gender = new ComboBox(Constants.ADD_STUDENT_GENDER.getStr());
+			university = new ComboBox(Constants.ADD_STUDENT_UNIVERSITY.getStr());
 			university.setWidth("100%");
 			firstName.setNullRepresentation("");
 			lastName.setNullRepresentation("");
 			age.setNullRepresentation("");
-			saveButton = new Button(Constants.SAVE.getString());
-			clearButton = new Button(Constants.CANCEL.getString());
-			clearButton.addClickListener(this);
+			saveButton = new Button(Constants.ADD_STUDENT_SAVE.getStr(), this);
+			cancelButton = new Button(Constants.ADD_STUDENT_CANCEL.getStr(), this);
+			cancelButton.addClickListener(this);
 			saveButton.addClickListener(this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			clearButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
-			gender.addItem(Constants.MALE.getString());
-			gender.addItem(Constants.FEMALE.getString());
+			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			gender.addItem(Constants.ADD_STUDENT_FEMALE.getStr());
+			gender.addItem(Constants.ADD_STUDENT_MALE.getStr());
 			return this;
 		}
 		
@@ -80,7 +80,7 @@ public class AddStudentMainLayoutFactory {
 			layout.addComponent(age, 0, 1);
 			layout.addComponent(gender, 1, 1);
 			layout.addComponent(university, 0, 2, 1, 2);
-			layout.addComponent(new HorizontalLayout(clearButton, saveButton), 0, 3);
+			layout.addComponent(new HorizontalLayout(cancelButton, saveButton), 0, 3);
 			age.clear();
 			return layout;
 		}
@@ -104,10 +104,7 @@ public class AddStudentMainLayoutFactory {
 		private void save(){
 			Notification n;
 			if(!isOperationValid()){
-				/*
-				 * Notification.show(NotificationMessages.STUDENT_SAVE_ERROR_TITLE.getString(), NotificationMessages.STUDENT_SAVE_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE);
-				 */
-				n = new Notification(Constants.ERROR.getString(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(),
+				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE, true);
 				n.setDelayMsec(200000);
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
@@ -122,10 +119,7 @@ public class AddStudentMainLayoutFactory {
 			try{
 				fieldGroup.commit();
 			} catch(CommitException e){
-				/*
-				 * Notification.show(NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_TITLE.getString(), NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE);
-				 */
-				n = new Notification(Constants.ERROR.getString(), Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(),
+				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE, true);
 				n.setDelayMsec(200000);
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
@@ -134,10 +128,7 @@ public class AddStudentMainLayoutFactory {
 			}
 			addStudentService.saveStudent(student);
 			studentSavedListener.studentSaved();
-			/*
-			 * Notification.show(NotificationMessages.STUDENT_SAVE_SUCCESS_TITLE.getString(), NotificationMessages.STUDENT_SAVE_SUCCESS_DESCRIPTION.getString(), Type.WARNING_MESSAGE);
-			 */
-			n = new Notification(Constants.SAVE_SUCCESSFUL.getString(), Type.WARNING_MESSAGE);
+			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
 			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 			n.setDelayMsec(200000);
 			n.show(Page.getCurrent());

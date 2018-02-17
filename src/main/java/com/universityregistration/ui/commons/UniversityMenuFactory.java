@@ -9,7 +9,7 @@ import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-public class UniversMenuFactory implements UIComponentBuilder {
+public class UniversityMenuFactory implements UIComponentBuilder {
 	private class UniversMenu extends VerticalLayout implements Property.ValueChangeListener {
 		private Tree mainMenu;
 		
@@ -23,19 +23,19 @@ public class UniversMenuFactory implements UIComponentBuilder {
 			setWidth("100%");
 			setHeight("100%");
 			setMargin(false);
-			mainMenu.addItem(Constants.MENU_STUDENTS.getString());
-			mainMenu.addItem(Constants.MENU_UNIVERSITIES.getString());
-			mainMenu.expandItem(Constants.MENU_STUDENTS.getString());
-			mainMenu.expandItem(Constants.MENU_UNIVERSITIES.getString());
-			mainMenu.addItem(Constants.MENU_ADD_STUDENT.getString());
-			mainMenu.addItem(Constants.MENU_REMOVE_STUDENT.getString());
-			mainMenu.setChildrenAllowed(Constants.MENU_ADD_STUDENT.getString(), false);
-			mainMenu.setChildrenAllowed(Constants.MENU_REMOVE_STUDENT.getString(), false);
-			mainMenu.setParent(Constants.MENU_ADD_STUDENT.getString(), Constants.MENU_STUDENTS.getString());
-			mainMenu.setParent(Constants.MENU_REMOVE_STUDENT.getString(), Constants.MENU_STUDENTS.getString());
-			mainMenu.addItem(Constants.MENU_OPERATIONS_UNIVERSITY.getString());
-			mainMenu.setChildrenAllowed(Constants.MENU_OPERATIONS_UNIVERSITY.getString(), false);
-			mainMenu.setParent(Constants.MENU_OPERATIONS_UNIVERSITY.getString(), Constants.MENU_UNIVERSITIES.getString());
+			mainMenu.addItem(Constants.STUDENTS_PARENT.getStr());
+			mainMenu.addItem(Constants.UNIVERSITIES_PARENT.getStr());
+			mainMenu.expandItem(Constants.STUDENTS_PARENT.getStr());
+			mainMenu.expandItem(Constants.UNIVERSITIES_PARENT.getStr());
+			mainMenu.addItem(Constants.STUDENTS_ADD_STUDENT.getStr());
+			mainMenu.addItem(Constants.STUDENTS_REMOVE_STUDENT.getStr());
+			mainMenu.setChildrenAllowed(Constants.STUDENTS_ADD_STUDENT.getStr(), false);
+			mainMenu.setChildrenAllowed(Constants.STUDENTS_REMOVE_STUDENT.getStr(), false);
+			mainMenu.setParent(Constants.STUDENTS_ADD_STUDENT.getStr(), Constants.STUDENTS_PARENT.getStr());
+			mainMenu.setParent(Constants.STUDENTS_REMOVE_STUDENT.getStr(), Constants.STUDENTS_PARENT.getStr());
+			mainMenu.addItem(Constants.UNIVERSITIES_ADD_UNIVERSITY.getStr());
+			mainMenu.setChildrenAllowed(Constants.UNIVERSITIES_ADD_UNIVERSITY.getStr(), false);
+			mainMenu.setParent(Constants.UNIVERSITIES_ADD_UNIVERSITY.getStr(), Constants.UNIVERSITIES_PARENT.getStr());
 			addComponent(mainMenu);
 			return this;
 		}

@@ -5,6 +5,7 @@ import com.universityregistration.services.AddUniversityService;
 import com.universityregistration.utils.Constants;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -19,9 +20,11 @@ import com.vaadin.ui.themes.ValoTheme;
 @org.springframework.stereotype.Component
 public class AddUniversityLayoutFactory {
 	private class AddUniversityLayout extends VerticalLayout implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 		private TextField universityName;
 		private TextField universityCountry;
 		private TextField universityCity;
+		private Button cancelButton;
 		private Button saveButton;
 		private BeanFieldGroup<University> fieldGroup;
 		private University university;
@@ -33,11 +36,13 @@ public class AddUniversityLayoutFactory {
 		}
 		
 		public AddUniversityLayout init(){
-			universityName = new TextField("Name");
-			universityCountry = new TextField("Country");
-			universityCity = new TextField("City");
-			saveButton = new Button("Save", this);
+			universityName = new TextField(Constants.ADD_UNIVERSITY_NAME.getStr());
+			universityCountry = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
+			universityCity = new TextField(Constants.ADD_UNIVERSITY_CITY.getStr());
+			saveButton = new Button(Constants.ADD_UNIVERSITY_SAVE.getStr(), this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			cancelButton = new Button(Constants.ADD_UNIVERSITY_CANCEL.getStr(), this);
+			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			universityName.setNullRepresentation("");
 			universityCountry.setNullRepresentation("");
 			universityCity.setNullRepresentation("");
@@ -59,22 +64,54 @@ public class AddUniversityLayoutFactory {
 			grid.addComponent(universityName, 0, 0, 1, 0);
 			grid.addComponent(universityCountry, 0, 1, 1, 1);
 			grid.addComponent(universityCity, 0, 2, 1, 2);
-			grid.addComponent(new HorizontalLayout(saveButton), 0, 3, 0, 3);
+			grid.addComponent(new HorizontalLayout(cancelButton, saveButton), 0, 3, 0, 3);
 			return grid;
 		}
 		
 		public void buttonClick(ClickEvent event){
+			if(event.getSource() == this.saveButton){
+				save();
+			} else{
+				clearFields();
+			}
+		}
+		
+		private void save(){
+			Notification n;
+			if(isOperationInValid()){
+				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+						Type.ERROR_MESSAGE);
+				n.setDelayMsec(200000);
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
+			} else{
+				saveUniversity();
+			}
+		}
+		
+		private void saveUniversity(){
+			Notification n;
 			try{
 				fieldGroup.commit();
 			} catch(CommitException e){
-				Notification.show(Constants.STUDENT_SAVE_VALIDATION_ERROR_TITLE.getString(),
-						Constants.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE);
+				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+						Type.ERROR_MESSAGE);
+				n.setDelayMsec(200000);
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
 				return;
 			}
-			clearFields();
 			addUniversityService.addUniversity(university);
 			universitySavedListener.universitySaved();
-			Notification.show("SAVE", "University successfully saved!", Type.WARNING_MESSAGE);
+			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
+			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.setDelayMsec(200000);
+			n.show(Page.getCurrent());
+			clearFields();
+		}
+		
+		private boolean isOperationInValid(){
+			return universityName.isEmpty() && universityCountry.isEmpty() && universityCity.isEmpty();
 		}
 		
 		private void clearFields(){

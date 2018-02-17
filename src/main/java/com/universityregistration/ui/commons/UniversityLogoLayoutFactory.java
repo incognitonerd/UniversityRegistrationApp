@@ -8,13 +8,13 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-public class UniversLogoLayoutFactory implements UIComponentBuilder {
+public class UniversityLogoLayoutFactory implements UIComponentBuilder {
 	private class LogoLayout extends VerticalLayout {
 		private Embedded logo;
 		
 		public LogoLayout init(){
 			logo = new Embedded();
-			logo.setSource(new ThemeResource(Constants.LOGO_BANNER.getString()));
+			logo.setSource(new ThemeResource(Constants.LOGO_BANNER.getStr()));
 			logo.setWidth("100%");
 			logo.setHeight("100%");
 			return this;

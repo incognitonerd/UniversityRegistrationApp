@@ -25,6 +25,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 			studentsTable.removeColumn("id");
 			studentsTable.removeColumn("university");
 			studentsTable.setImmediate(true);
+			studentsTable.setSizeFull();
 			return this;
 		}
 		

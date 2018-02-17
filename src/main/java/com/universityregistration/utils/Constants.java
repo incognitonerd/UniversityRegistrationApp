@@ -1,51 +1,51 @@
 package com.universityregistration.utils;
 public enum Constants{
-	AGE("Age"), //
-	CLEAR("Clear"), //
-	CANCEL("Cancel"), //
-	ERROR("Error!"), //
-	FIRST_NAME("First Name"), //
-	FEMALE("Female"), //
-	GENDER("Gender"), //
-	LAST_NAME("Last Name"), //
-	LOGO_BANNER("../../images/uwfBanner.png"), //
-	MAIN_MENU("MAIN MENU"), //
-	MENU_STUDENTS("STUDENTS"), //
-	MENU_UNIVERSITIES("UNIVERSITIES"), //
-	MENU_LOGOUT("LOGOUT"), //
-	MENU_OPERATIONS_UNIVERSITY("Operations"), //
-	MENU_LOGOUT_LABEL("Logout"), //
-	MENU_ADD_UNIVERSITY("ADD UNIVERSITY"), //
+	LOGO_BANNER("../../images/uwfBanner.png"),
+	//
+	STUDENTS_PARENT("STUDENTS"), //
+	STUDENTS_ADD_STUDENT("Add Student"), //
+	ADD_STUDENT_MAIN_MENU("ADD STUDENT"), //
+	ADD_STUDENT_FIRST_NAME("First Name"), //
+	ADD_STUDENT_LAST_NAME("Last Name"), //
+	ADD_STUDENT_AGE("Age"), //
+	ADD_STUDENT_GENDER("Gender"), //
+	ADD_STUDENT_FEMALE("Female"), //
+	ADD_STUDENT_MALE("Male"), //
+	ADD_STUDENT_UNIVERSITY("University"), //
+	ADD_STUDENT_CANCEL("Cancel"), //
+	ADD_STUDENT_SAVE("Save"), //
+	ADD_STUDENT_SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), //
+	//
+	STUDENTS_REMOVE_STUDENT("Remove Student"), //
+	REMOVE_STUDENT_CANCEL("Cancel"), //
+	REMOVE_STUDENT("Remove"), //
+	//
+	//
+	UNIVERSITIES_PARENT("UNIVERSITIES"), //
+	UNIVERSITIES_ADD_UNIVERSITY("Add University"), //
+	ADD_UNIVERSITY_MAIN_MENU("ADD UNIVERSITY"), //
+	ADD_UNIVERSITY_NAME("Name"), //
+	ADD_UNIVERSITY_CITY("City"), //
+	ADD_UNIVERSITY_COUNTRY("Country"), //
+	ADD_UNIVERSITY_SAVE("Save"), //
 	MENU_SHOW_UNIVERSITY("SHOW ALL UNIVERSITIES"), //
 	MENU_CHART_UNIVERSITY("STATISTICS"), //
-	MALE("Male"), //
-	MENU_STUDENT("STUDENT"), //
-	MENU_UNIVERSITY("UNIVERSITY"), //
-	MENU_ADD_STUDENT("Add Student"), //
-	MENU_REMOVE_STUDENT("Remove Student"), //
-	MENU_OPERATIONS("Operations"), //
-	REMOVE_STUDENT("Remove"), //
-	SAVE_SUCCESSFUL("Successfully Saved!"), //
-	SAVE("Save"), //
-	STUDENT_MAIN_MENU("MAIN MENU"), //
-	STUDENT_SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), //
-	STUDENT_SAVE_ERROR_TITLE("ERROR"), //
-	STUDENT_SAVE_ERROR_DESCRIPTION("Must have at least one university!"), //
-	STUDENT_SAVE_SUCCESS_TITLE("SAVE"), //
-	STUDENT_SAVE_SUCCESS_DESCRIPTION("Student successfully saved!"), //
-	STUDENT_SAVE_VALIDATION_ERROR_TITLE("ERROR"), //
-	STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION("Fields must be filled!"), //
-	STUDENT_REMOVE_SUCCESS_TITLE("REMOVE"), //
-	STUDENT_REMOVE_SUCCESS_DESCRIPTION("Student(s) successfully removed!"), //
-	SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), //
-	UNIVERSITY("University");
+	//
+	ERROR("Error!"), //
+	SUCCESSFULLY_SAVED("Successfully Saved!"), //
+	STUDENT_SUCCESSFULLY_REMOVED("Successfully Removed!"), //
+	BLANK_FIELDS_SAVE_ERROR_DESCRIPTION("All Fields Must Be filled!"), //
+	NO_STUDENT_SELECTED("Select At Least One Student!"), //
+	//
+	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"), //
+	ADD_UNIVERSITY_CANCEL("Cancel"); //
 	private final String string;
 	
 	private Constants(String string){
 		this.string = string;
 	}
 	
-	public String getString(){
+	public String getStr(){
 		return this.string;
 	}
 }

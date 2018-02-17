@@ -15,10 +15,10 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SpringUI(path = UniversMainUI.NAME)
+@SpringUI(path = UniversityMainUI.NAME)
 @Title("University App")
 @Theme("valo")
-public class UniversMainUI extends UI {
+public class UniversityMainUI extends UI {
 	public static final String NAME = "/ui";
 	private Component logo;
 	private Component menu;
@@ -32,9 +32,9 @@ public class UniversMainUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 	@Autowired
-	private UniversMenuFactory menuFactory;
+	private UniversityMenuFactory menuFactory;
 	@Autowired
-	private UniversLogoLayoutFactory logoFactory;
+	private UniversityLogoLayoutFactory logoFactory;
 	private Panel changeTab;
 	
 	// entry point of the application

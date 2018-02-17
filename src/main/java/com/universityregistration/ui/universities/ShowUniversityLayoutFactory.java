@@ -24,6 +24,7 @@ public class ShowUniversityLayoutFactory implements UIComponentBuilder {
 			universityTable.setColumnOrder("universityName", "universityCountry", "universityCity");
 			universityTable.removeColumn("id");
 			universityTable.setImmediate(true);
+			universityTable.setSizeFull();
 			return this;
 		}
 		

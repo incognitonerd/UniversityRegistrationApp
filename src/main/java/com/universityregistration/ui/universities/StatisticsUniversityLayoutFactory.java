@@ -13,6 +13,10 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class StatisticsUniversityLayoutFactory implements UIComponentBuilder {
 	private List<University> universities;
+	@Autowired
+	private UniversityStatsService universityStatsService;
+	@Autowired
+	private ShowAllUniversitiesService universitiesService;
 	
 	private class StatisticsUniversityLayout extends VerticalLayout {
 		public Component layout(){
@@ -31,11 +35,6 @@ public class StatisticsUniversityLayoutFactory implements UIComponentBuilder {
 			return this;
 		}
 	}
-	
-	@Autowired
-	private UniversityStatsService universityStatsService;
-	@Autowired
-	private ShowAllUniversitiesService universitiesService;
 	
 	public Component createComponent(){
 		return new StatisticsUniversityLayout().load().layout();
