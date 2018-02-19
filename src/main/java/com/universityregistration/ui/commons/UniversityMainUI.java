@@ -19,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 @Title("University App")
 @Theme("valo")
 public class UniversityMainUI extends UI {
+	private static final long serialVersionUID = 1L;
 	public static final String NAME = "/ui";
 	private Component logo;
 	private Component menu;

@@ -15,6 +15,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 	private BeanItemContainer<Student> container;
 	
 	private class ShowAllStudentsLayout extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 		private Grid studentsTable;
 		
 		public ShowAllStudentsLayout init(){
@@ -26,8 +27,8 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 			studentsTable.removeColumn("university");
 			studentsTable.setImmediate(true);
 			studentsTable.setSizeFull();
-			//studentsTable.setHeight("90%");
-			//studentsTable.setWidth("90%");
+			// studentsTable.setHeight("90%");
+			// studentsTable.setWidth("90%");
 			return this;
 		}
 		

@@ -15,6 +15,7 @@ public class ShowUniversityLayoutFactory implements UIComponentBuilder {
 	private BeanItemContainer<University> container;
 	
 	private class ShowUniversityLayout extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
 		private Grid universityTable;
 		
 		public ShowUniversityLayout init(){

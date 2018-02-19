@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name = StudentLayoutFactory.NAME, ui = UniversityMainUI.class)
 public class StudentLayoutFactory extends VerticalLayout implements View, StudentSavedListener {
+	private static final long serialVersionUID = 1L;
 	public static final String NAME = "addstudent";
 	private TabSheet tabSheet;
 	@Autowired

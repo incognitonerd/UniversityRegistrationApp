@@ -39,9 +39,9 @@ public class AddUniversityLayoutFactory {
 			universityName = new TextField(Constants.ADD_UNIVERSITY_NAME.getStr());
 			universityCountry = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
 			universityCity = new TextField(Constants.ADD_UNIVERSITY_CITY.getStr());
-			saveButton = new Button(Constants.ADD_UNIVERSITY_SAVE.getStr(), this);
+			saveButton = new Button(Constants.SAVE.getStr(), this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			cancelButton = new Button(Constants.ADD_UNIVERSITY_CANCEL.getStr(), this);
+			cancelButton = new Button(Constants.CANCEL.getStr(), this);
 			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			universityName.setNullRepresentation("");
 			universityCountry.setNullRepresentation("");
@@ -59,7 +59,7 @@ public class AddUniversityLayoutFactory {
 		public Component layout(){
 			setWidth("100%");
 			GridLayout grid = new GridLayout(2, 4);
-			//grid.setHeightUndefined();
+			// grid.setHeightUndefined();
 			grid.setSpacing(true);
 			grid.addComponent(universityName, 0, 0, 1, 0);
 			grid.addComponent(universityCountry, 0, 1, 1, 1);

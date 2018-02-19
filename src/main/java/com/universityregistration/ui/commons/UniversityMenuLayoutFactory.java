@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class UniversityMenuLayoutFactory implements UIComponentBuilder {
 	private class UniversityMenu extends VerticalLayout implements Property.ValueChangeListener {
+		private static final long serialVersionUID = 1L;
 		private Tree mainMenu;
 		
 		public UniversityMenu init(){

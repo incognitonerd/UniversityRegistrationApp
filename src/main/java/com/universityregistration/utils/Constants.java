@@ -12,13 +12,12 @@ public enum Constants{
 	ADD_STUDENT_FEMALE("Female"), //
 	ADD_STUDENT_MALE("Male"), //
 	ADD_STUDENT_UNIVERSITY("University"), //
-	ADD_STUDENT_CANCEL("Cancel"), //
-	ADD_STUDENT_SAVE("Save"), //
 	ADD_STUDENT_SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), //
 	//
 	STUDENTS_REMOVE_STUDENT("Remove Student"), //
-	REMOVE_STUDENT_CANCEL("Cancel"), //
-	REMOVE_STUDENT("Remove"), //
+	CANCEL("Cancel"), //
+	REMOVE("Remove"), //
+	SAVE("Save"), //
 	//
 	//
 	UNIVERSITIES_PARENT("UNIVERSITIES"), //
@@ -27,7 +26,6 @@ public enum Constants{
 	ADD_UNIVERSITY_NAME("Name"), //
 	ADD_UNIVERSITY_CITY("City"), //
 	ADD_UNIVERSITY_COUNTRY("Country"), //
-	ADD_UNIVERSITY_SAVE("Save"), //
 	MENU_SHOW_UNIVERSITY("SHOW ALL UNIVERSITIES"), //
 	MENU_CHART_UNIVERSITY("STATISTICS"), //
 	//
@@ -37,8 +35,8 @@ public enum Constants{
 	BLANK_FIELDS_SAVE_ERROR_DESCRIPTION("All Fields Must Be filled!"), //
 	NO_STUDENT_SELECTED("Select At Least One Student!"), //
 	//
-	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"), //
-	ADD_UNIVERSITY_CANCEL("Cancel"); //
+	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"); //
+	//
 	private final String string;
 	
 	private Constants(String string){

@@ -16,6 +16,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.MultiSelectionModel;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -23,6 +25,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @SpringView(name = RemoveStudentLayoutFactory.NAME, ui = UniversityMainUI.class)
 public class RemoveStudentLayoutFactory extends VerticalLayout implements View, Button.ClickListener {
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private ShowStudentsService studentService;
 	@Autowired
@@ -35,8 +38,8 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 	BeanItemContainer<Student> container;
 	
 	private void init(){
-		removeButton = new Button(Constants.REMOVE_STUDENT.getStr());
-		cancelButton = new Button(Constants.REMOVE_STUDENT_CANCEL.getStr());
+		removeButton = new Button(Constants.REMOVE.getStr());
+		cancelButton = new Button(Constants.CANCEL.getStr());
 		container = new BeanItemContainer<Student>(Student.class, students);
 		table = new Grid(container);
 	}
@@ -49,18 +52,13 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 		table.setImmediate(true);
 		table.setSelectionMode(SelectionMode.MULTI);
 		table.setSizeFull();
-		// cancelButton.addClickListener(this);
+		cancelButton.addClickListener(this);
 		removeButton.addClickListener(this);
 		removeButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		// cancelButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		// GridLayout layout = new GridLayout(4, 4);
-		// layout.setSizeUndefined();
-		// layout.setSpacing(true);
+		cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		addComponent(table);
-		addComponent(removeButton);
-		// layout.addComponent(table, 3, 0);
-		// layout.addComponent(new HorizontalLayout(cancelButton, removeButton), 0, 4);
-		// addComponent(layout);
+		addComponent(new Label(""));
+		addComponent(new HorizontalLayout(cancelButton, removeButton));
 	}
 	
 	public void buttonClick(ClickEvent event){

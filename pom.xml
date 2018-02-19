@@ -21,7 +21,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>dom4j</groupId> <artifactId>dom4j</artifactId> <version>1.6.1</version> <scope>provided</scope> </dependency> -->
 		<!-- database dependencies -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -91,7 +90,7 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-		<finalName>boston</finalName>
+		<finalName>ZaysUniversityRegistrationApp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -110,3 +109,4 @@
 		</plugins>
 	</build>
 </project>
+<!-- <dependency> <groupId>dom4j</groupId> <artifactId>dom4j</artifactId> <version>1.6.1</version> <scope>provided</scope> </dependency> -->

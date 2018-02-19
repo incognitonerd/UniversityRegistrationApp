@@ -5,6 +5,8 @@ import com.vaadin.ui.SingleComponentContainer;
 import com.vaadin.ui.UI;
 
 public class UniversityNavigator extends Navigator {
+	private static final long serialVersionUID = 1L;
+	
 	public UniversityNavigator(UI ui, SingleComponentContainer container){
 		super(ui, container);
 	}

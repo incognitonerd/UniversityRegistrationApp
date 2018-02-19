@@ -53,10 +53,10 @@ public class AddStudentMainLayoutFactory {
 			firstName.setNullRepresentation("");
 			lastName.setNullRepresentation("");
 			age.setNullRepresentation("");
-			saveButton = new Button(Constants.ADD_STUDENT_SAVE.getStr(), this);
-			cancelButton = new Button(Constants.ADD_STUDENT_CANCEL.getStr(), this);
-			cancelButton.addClickListener(this);
-			saveButton.addClickListener(this);
+			saveButton = new Button(Constants.SAVE.getStr(), this);
+			cancelButton = new Button(Constants.CANCEL.getStr(), this);
+			// cancelButton.addClickListener(this);
+			// saveButton.addClickListener(this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			gender.addItem(Constants.ADD_STUDENT_FEMALE.getStr());
@@ -73,7 +73,6 @@ public class AddStudentMainLayoutFactory {
 		public Component layout(){
 			setMargin(true);
 			GridLayout layout = new GridLayout(2, 4);
-			//layout.setSizeUndefined();
 			layout.setSpacing(true);
 			layout.addComponent(firstName, 0, 0);
 			layout.addComponent(lastName, 1, 0);

@@ -19,6 +19,8 @@ public class StatisticsUniversityLayoutFactory implements UIComponentBuilder {
 	private ShowAllUniversitiesService universitiesService;
 	
 	private class StatisticsUniversityLayout extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+		
 		public Component layout(){
 			setMargin(true);
 			for(University university: universities){
