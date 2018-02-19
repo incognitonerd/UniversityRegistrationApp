@@ -1,14 +1,5 @@
 # UniversityRegistrationApp
 
-github - for the code repository  
-jenkins server - build management  
-wildfly server - application server  
-mysql - database   
-vaadin - frontend framework  
-spring boot - dependency management  
-spring security - for secure logins  
-jpa - for database modeling  
-
 Simple application that displays basic architecural principles such as how to connect to a database, how to create repositories, and how to create services in an effecient way to name a few. Users enter a home page and from there, they are able to add a university, add student, remove a student, see a list of all the added students, see a list of all of the added universities, and university statistics as to how many students are registered.  
 
 Dev environment -  
