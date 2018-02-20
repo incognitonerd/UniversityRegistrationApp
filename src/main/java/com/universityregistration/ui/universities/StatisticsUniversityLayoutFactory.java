@@ -23,10 +23,10 @@ public class StatisticsUniversityLayoutFactory implements UIComponentBuilder {
 		
 		public Component layout(){
 			setMargin(true);
-			for(University university: universities){
-				int numOfStudent = universityStatsService.getStatistics(university.getId());
-				Label label = new Label("<p><b>" + university.getUniversityName() + "</b>" + "  -  " + numOfStudent
-						+ " students" + "</p>", ContentMode.HTML);
+			for(University uni: universities){
+				int numOfStudent = universityStatsService.getStatistics(uni.getId());
+				Label label = new Label("<p><b>" + uni.getName() + "</b>" + "  -  " + numOfStudent + " students"
+						+ "</p>", ContentMode.HTML);
 				addComponent(label);
 			}
 			return this;

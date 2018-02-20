@@ -10,11 +10,11 @@ public class AddUniversityServiceImpl implements AddUniversityService {
 	@Autowired
 	private AddUniversityRepository addUniversityRepository;
 	
-	public void addUniversity(University universityDAO){
-		University university = new University();
-		university.setUniversityName(universityDAO.getUniversityName());
-		university.setUniversityCountry(universityDAO.getUniversityCountry());
-		university.setUniversityCity(universityDAO.getUniversityCity());
-		addUniversityRepository.save(university);
+	public void addUniversity(University uniDAO){
+		University uni = new University();
+		uni.setName(uniDAO.getName());
+		uni.setCountry(uniDAO.getCountry());
+		uni.setCity(uniDAO.getCity());
+		addUniversityRepository.save(uni);
 	}
 }

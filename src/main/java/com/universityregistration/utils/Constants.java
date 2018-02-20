@@ -35,7 +35,14 @@ public enum Constants{
 	BLANK_FIELDS_SAVE_ERROR_DESCRIPTION("All Fields Must Be filled!"), //
 	NO_STUDENT_SELECTED("Select At Least One Student!"), //
 	//
-	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"); //
+	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"), //
+	//
+	NAME_TESTER("Joe"), //
+	AGE_TESTER("5"), //
+	GENDER_TESTER("FEMALE"), //
+	ID_TESTER("045491"), //
+	CITY_TESTER("Oranjestad"), //
+	COUNTRY_TESTER("Ivory Coast"); //
 	//
 	private final String string;
 	

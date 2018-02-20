@@ -15,13 +15,13 @@ public class University {
 	private Integer id;
 	@Column(name = "university_name")
 	@NotNull(message = "University name must be filled!")
-	private String universityName;
+	private String name;
 	@NotNull(message = "University country must be filled!")
 	@Column(name = "university_country")
-	private String universityCountry;
+	private String country;
 	@NotNull(message = "University city must be filled!")
 	@Column(name = "university_city")
-	private String universityCity;
+	private String city;
 	
 	public University(){
 	}
@@ -34,32 +34,32 @@ public class University {
 		this.id = id;
 	}
 	
-	public String getUniversityName(){
-		return universityName;
+	public String getName(){
+		return name;
 	}
 	
-	public void setUniversityName(String universityName){
-		this.universityName = universityName;
+	public void setName(String name){
+		this.name = name;
 	}
 	
-	public String getUniversityCountry(){
-		return universityCountry;
+	public String getCountry(){
+		return country;
 	}
 	
-	public void setUniversityCountry(String universityCountry){
-		this.universityCountry = universityCountry;
+	public void setCountry(String country){
+		this.country = country;
 	}
 	
-	public String getUniversityCity(){
-		return universityCity;
+	public String getCity(){
+		return city;
 	}
 	
-	public void setUniversityCity(String universityCity){
-		this.universityCity = universityCity;
+	public void setCity(String city){
+		this.city = city;
 	}
 	
 	@Override
 	public String toString(){
-		return this.universityName;
+		return this.name;
 	}
 }
