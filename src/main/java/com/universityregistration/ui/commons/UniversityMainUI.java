@@ -16,7 +16,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SpringUI(path = UniversityMainUI.NAME)
-@Title("University App")
+@Title("Zay's University App")
 @Theme("valo")
 public class UniversityMainUI extends UI {
 	private static final long serialVersionUID = 1L;
