@@ -1,16 +1,16 @@
 # UniversityRegistrationApp
 
-Simple application that displays basic architectural principles such as how to connect to a database, how to create repositories, and how to create services in an efficient way to name a few. Users enter a home page and from there, they are able to add a university, add student, remove a student, see a list of all the added students, see a list of all of the added universities, and university statistics as to how many students are registered.  
+Simple application that displays a few basic architectural principles such as how to connect to a database, how to create repositories, and how to create services in an efficient manner. Users land on a home page and from there, they are able to add a university, add a student, remove a student, see a list of all the added students, see a list of all of the added universities, and view the university statistics as to how many students are registered.  
 
 Dev Environment -  
-* Github - code repository  
-* Jenkins - continuous integration continious deployment tool  
-* Ubuntu - Linux box to host my applications  
-* Macbook Pro - my personal machine  
+* Github - Code repository  
+* Jenkins - Continuous integration continious deployment tool  
+* Ubuntu Server - Linux box to host my applications  
+* Macbook Pro - My personal machine  
 * Eclipse Java EE - IDE
-* Java 8 - for lambda expressions  
-* Mysql - for database  
-* Wildfly - application server for the war  
+* Java 8 - For lambda expressions  
+* Mysql - For database  
+* Wildfly - Application server for the war  
 
 Build Management And Automation Tool -
 * Maven - project management framework for compilation, packaging, simplifies and standardizes a project's build process, a default/standard project structure, dependency management, relies on internet connection. Based on the pom (project object model)  
