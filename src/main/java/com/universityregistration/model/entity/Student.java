@@ -1,4 +1,4 @@
- package com.universityregistration.model.entity;
+package com.universityregistration.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,22 +18,22 @@ public class Student {
 	@GeneratedValue
 	@Column(name = "id")
 	private Integer id;
-	@NotNull(message = "Must specify first name!")
+	@NotNull(message = "First name must be filled!")
 	@Column(name = "first_name")
 	private String firstName;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "university_id")
 	@NotNull(message = "University must be filled!")
 	private University university;
-	@NotNull(message = "Must specify last name!")
+	@NotNull(message = "Last name must be filled!")
 	@Column(name = "last_name")
 	private String lastName;
-	@NotNull(message = "Must specify age!")
-	@Min(value = 0, message = "Can not be less than 0")
-	@Max(value = 100, message = "Can not be greater than 100")
+	@NotNull(message = "Age must be filled!")
+	@Min(value = 0, message = "Cannot be less than 0")
+	@Max(value = 200, message = "Cannot be greater than 200")
 	@Column(name = "age")
 	private Integer age;
-	@NotNull(message = "Must specify gender!")
+	@NotNull(message = "Gender must be filled!")
 	@Column(name = "gender")
 	private String gender;
 	
@@ -68,16 +68,16 @@ public class Student {
 		return gender;
 	}
 	
+	public void setGender(String gender){
+		this.gender = gender;
+	}
+	
 	public Integer getId(){
 		return id;
 	}
 	
 	public void setId(Integer id){
 		this.id = id;
-	}
-	
-	public void setGender(String gender){
-		this.gender = gender;
 	}
 	
 	public University getUniversity(){

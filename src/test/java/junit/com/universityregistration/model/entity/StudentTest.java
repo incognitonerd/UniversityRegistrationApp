@@ -44,10 +44,6 @@ public class StudentTest extends TestCase {
 	@Test
 	public void testSetUniversity(){
 		University u = new University();
-		// u.setId(Integer.valueOf(Constants.ID_TESTER.getStr()));
-		// u.setUniversityName(Constants.NAME_TESTER.getStr());
-		// u.setUniversityCity(Constants.CITY_TESTER.getStr());
-		// u.setUniversityCountry(Constants.COUNTRY_TESTER.getStr());
 		Student s = new Student();
 		s.setUniversity(u);
 		assertNotNull(s.getUniversity());

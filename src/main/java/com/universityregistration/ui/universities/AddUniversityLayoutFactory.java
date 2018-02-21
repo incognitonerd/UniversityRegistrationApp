@@ -21,9 +21,9 @@ import com.vaadin.ui.themes.ValoTheme;
 public class AddUniversityLayoutFactory {
 	private class AddUniversityLayout extends VerticalLayout implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
-		private TextField universityName;
-		private TextField universityCountry;
-		private TextField universityCity;
+		private TextField name;
+		private TextField country;
+		private TextField city;
 		private Button cancelButton;
 		private Button saveButton;
 		private BeanFieldGroup<University> fieldGroup;
@@ -36,16 +36,16 @@ public class AddUniversityLayoutFactory {
 		}
 		
 		public AddUniversityLayout init(){
-			universityName = new TextField(Constants.ADD_UNIVERSITY_NAME.getStr());
-			universityCountry = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
-			universityCity = new TextField(Constants.ADD_UNIVERSITY_CITY.getStr());
+			name = new TextField(Constants.ADD_UNIVERSITY_NAME.getStr());
+			country = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
+			city = new TextField(Constants.ADD_UNIVERSITY_CITY.getStr());
 			saveButton = new Button(Constants.SAVE.getStr(), this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			cancelButton = new Button(Constants.CANCEL.getStr(), this);
 			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
-			universityName.setNullRepresentation("");
-			universityCountry.setNullRepresentation("");
-			universityCity.setNullRepresentation("");
+			name.setNullRepresentation("");
+			country.setNullRepresentation("");
+			city.setNullRepresentation("");
 			return this;
 		}
 		
@@ -61,9 +61,9 @@ public class AddUniversityLayoutFactory {
 			GridLayout grid = new GridLayout(2, 4);
 			// grid.setHeightUndefined();
 			grid.setSpacing(true);
-			grid.addComponent(universityName, 0, 0, 1, 0);
-			grid.addComponent(universityCountry, 0, 1, 1, 1);
-			grid.addComponent(universityCity, 0, 2, 1, 2);
+			grid.addComponent(name, 0, 0, 1, 0);
+			grid.addComponent(country, 0, 1, 1, 1);
+			grid.addComponent(city, 0, 2, 1, 2);
 			grid.addComponent(new HorizontalLayout(cancelButton, saveButton), 0, 3, 0, 3);
 			return grid;
 		}
@@ -111,13 +111,13 @@ public class AddUniversityLayoutFactory {
 		}
 		
 		private boolean isOperationInValid(){
-			return universityName.isEmpty() || universityCountry.isEmpty() || universityCity.isEmpty();
+			return name.isEmpty() || country.isEmpty() || city.isEmpty();
 		}
 		
 		private void clearFields(){
-			universityName.setValue(null);
-			universityCountry.setValue(null);
-			universityCity.setValue(null);
+			name.setValue(null);
+			country.setValue(null);
+			city.setValue(null);
 		}
 	}
 	

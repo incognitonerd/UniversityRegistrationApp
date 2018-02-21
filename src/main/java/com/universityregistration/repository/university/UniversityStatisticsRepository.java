@@ -7,6 +7,6 @@ import com.universityregistration.model.entity.University;
 
 @Repository
 public interface UniversityStatisticsRepository extends JpaRepository<University, Long> {
-	@Query("select count(s) from Student s where s.university.id=:universityId")
-	Integer getNumOfStudentsForUniversity(@Param("universityId") Integer universityId);
+	@Query("select count(s) from Student s where s.university.id=:id")
+	Integer getNumOfStudentsForUniversity(@Param("id") Integer id);
 }

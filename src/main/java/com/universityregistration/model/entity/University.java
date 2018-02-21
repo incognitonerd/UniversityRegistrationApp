@@ -14,12 +14,12 @@ public class University {
 	@Column(name = "id")
 	private Integer id;
 	@Column(name = "university_name")
-	@NotNull(message = "University name must be filled!")
+	@NotNull(message = "Name must be filled!")
 	private String name;
-	@NotNull(message = "University country must be filled!")
+	@NotNull(message = "Country must be filled!")
 	@Column(name = "university_country")
 	private String country;
-	@NotNull(message = "University city must be filled!")
+	@NotNull(message = "City must be filled!")
 	@Column(name = "university_city")
 	private String city;
 	

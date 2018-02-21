@@ -8,9 +8,9 @@ import com.universityregistration.model.entity.University;
 
 @Repository
 public interface ShowAllUniversitiesRepository extends JpaRepository<University, Long> {
-	@Query("select u from University u order by u.universityName")
+	@Query("select u from University u order by u.name")
 	List<University> getAllUniversities();
 	
-	@Query("select count(s) from Student s where s.university.id=:universityId")
-	Integer getNumOfStudentsForUniversity(@Param("universityId") Integer universityId);
+	@Query("select count(s) from Student s where s.university.id=:id")
+	Integer getNumOfStudentsForUniversity(@Param("id") Integer id);
 }

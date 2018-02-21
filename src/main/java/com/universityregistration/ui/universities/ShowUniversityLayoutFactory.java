@@ -22,7 +22,7 @@ public class ShowUniversityLayoutFactory implements UIComponentBuilder {
 			setMargin(true);
 			container = new BeanItemContainer<University>(University.class, universities);
 			universityTable = new Grid(container);
-			universityTable.setColumnOrder("universityName", "universityCountry", "universityCity");
+			universityTable.setColumnOrder("name", "city", "country");
 			universityTable.removeColumn("id");
 			universityTable.setImmediate(true);
 			universityTable.setSizeFull();
