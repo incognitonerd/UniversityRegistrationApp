@@ -13,6 +13,8 @@ import com.vaadin.ui.VerticalLayout;
 public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 	private List<Student> students;
 	private BeanItemContainer<Student> container;
+	@Autowired
+	private ShowStudentsService showStudentsService;
 	
 	private class ShowAllStudentsLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
@@ -48,9 +50,6 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 		container.removeAllItems();
 		container.addAll(students);
 	}
-	
-	@Autowired
-	private ShowStudentsService showStudentsService;
 	
 	public Component createComponent(){
 		return new ShowAllStudentsLayout().load().init().layout();

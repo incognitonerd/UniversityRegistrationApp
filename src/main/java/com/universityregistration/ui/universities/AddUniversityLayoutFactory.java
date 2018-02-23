@@ -19,6 +19,9 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class AddUniversityLayoutFactory {
+	@Autowired
+	private AddUniversityService addUniversityService;
+	
 	private class AddUniversityLayout extends VerticalLayout implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
 		private TextField name;
@@ -120,9 +123,6 @@ public class AddUniversityLayoutFactory {
 			city.setValue(null);
 		}
 	}
-	
-	@Autowired
-	private AddUniversityService addUniversityService;
 	
 	public Component createComponent(UniversitySavedListener universitySavedListener){
 		return new AddUniversityLayout(universitySavedListener).init().bind().layout();

@@ -11,12 +11,12 @@ public class AddStudentServiceImpl implements AddStudentService {
 	private AddStudentRepository addStudentRepository;
 	
 	public void saveStudent(Student studentDAO){
-		Student student = new Student();
-		student.setFirstName(studentDAO.getFirstName());
-		student.setLastName(studentDAO.getLastName());
-		student.setAge(studentDAO.getAge());
-		student.setGender(studentDAO.getGender());
-		student.setUniversity(studentDAO.getUniversity());
-		addStudentRepository.save(student);
+		Student stu = new Student();
+		stu.setFirstName(studentDAO.getFirstName());
+		stu.setLastName(studentDAO.getLastName());
+		stu.setAge(studentDAO.getAge());
+		stu.setGender(studentDAO.getGender());
+		stu.setUniversity(studentDAO.getUniversity());
+		addStudentRepository.save(stu);
 	}
 }

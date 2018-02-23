@@ -24,6 +24,11 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class AddStudentMainLayoutFactory {
+	@Autowired
+	private AddStudentService addStudentService;
+	@Autowired
+	private ShowAllUniversitiesService showAllUniversitiesService;
+	
 	private class AddStudentMainLayout extends VerticalLayout implements ClickListener {
 		private static final long serialVersionUID = 1L;
 		private TextField firstName;
@@ -144,11 +149,6 @@ public class AddStudentMainLayoutFactory {
 	private boolean isOperationValid(){
 		return showAllUniversitiesService.getAllUniversities().size() != 0;
 	}
-	
-	@Autowired
-	private AddStudentService addStudentService;
-	@Autowired
-	private ShowAllUniversitiesService showAllUniversitiesService;
 	
 	public Component createComponent(StudentSavedListener studentSavedListener){
 		return new AddStudentMainLayout(studentSavedListener).init().load().bind().layout();
