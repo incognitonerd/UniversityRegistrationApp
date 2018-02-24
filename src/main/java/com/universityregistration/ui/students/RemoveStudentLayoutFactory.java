@@ -1,7 +1,7 @@
 package com.universityregistration.ui.students;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.universityregistration.model.entity.Student;
+import com.universityregistration.model.entities.Student;
 import com.universityregistration.services.RemoveStudentService;
 import com.universityregistration.services.ShowStudentsService;
 import com.universityregistration.ui.commons.UniversityMainUI;

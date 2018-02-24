@@ -1,8 +1,8 @@
-package junit.com.universityregistration.model.entity;
+package junit.com.universityregistration.model.entities;
 import junit.framework.TestCase;
 import org.junit.Test;
-import com.universityregistration.model.entity.Student;
-import com.universityregistration.model.entity.University;
+import com.universityregistration.model.entities.Student;
+import com.universityregistration.model.entities.University;
 import com.universityregistration.utils.Constants;
 
 public class StudentTest extends TestCase {

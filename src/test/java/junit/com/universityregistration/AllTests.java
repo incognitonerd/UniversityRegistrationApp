@@ -1,6 +1,6 @@
 package junit.com.universityregistration;
-import junit.com.universityregistration.model.entity.StudentTest;
-import junit.com.universityregistration.model.entity.UniversityTest;
+import junit.com.universityregistration.model.entities.StudentTest;
+import junit.com.universityregistration.model.entities.UniversityTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

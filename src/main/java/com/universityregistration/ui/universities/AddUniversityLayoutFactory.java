@@ -1,6 +1,6 @@
 package com.universityregistration.ui.universities;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.universityregistration.model.entity.University;
+import com.universityregistration.model.entities.University;
 import com.universityregistration.services.AddUniversityService;
 import com.universityregistration.utils.Constants;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;

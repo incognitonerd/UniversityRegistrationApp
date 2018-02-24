@@ -1,7 +1,7 @@
 package com.universityregistration.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.universityregistration.model.entity.Student;
+import com.universityregistration.model.entities.Student;
 import com.universityregistration.repository.addstudent.AddStudentRepository;
 import com.universityregistration.services.AddStudentService;
 
