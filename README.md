@@ -4,13 +4,13 @@ Simple application that displays a few basic architectural principles such as ho
 
 Dev Environment -  
 * Github - Code repository  
-* Jenkins - Continuous integration continious deployment build tool  
+* Jenkins Server - Continuous integration continious deployment build tool  
 * Ubuntu Server - Linux box to host my applications  
 * Macbook Pro - My personal machine  
 * Eclipse Java EE - IDE
 * Java 8 - Programming language used  
-* Mysql - For my database  
-* Wildfly - Application server to host the war  
+* Mysql Server - For my database  
+* Wildfly Server - Application server to host the war  
 
 Build Management And Automation Tool -
 * Maven - project management framework for compilation, packaging, simplifies and standardizes a project's build process, a default/standard project structure, dependency management, relies on internet connection. Based on the pom (project object model)  
