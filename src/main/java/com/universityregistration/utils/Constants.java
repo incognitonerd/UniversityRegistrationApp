@@ -15,10 +15,6 @@ public enum Constants{
 	ADD_STUDENT_SHOW_ALL_STUDENTS("SHOW ALL STUDENTS"), //
 	//
 	STUDENTS_REMOVE_STUDENT("Remove Student"), //
-	CANCEL("Cancel"), //
-	REMOVE("Remove"), //
-	SAVE("Save"), //
-	//
 	//
 	UNIVERSITIES_PARENT("UNIVERSITIES"), //
 	UNIVERSITIES_ADD_UNIVERSITY("Add University"), //
@@ -37,11 +33,17 @@ public enum Constants{
 	//
 	UNIVERSITY_SAVE_ERROR_DESCRIPTION("Please Enter A University!"), //
 	//
+	//
+	CANCEL("Cancel"), //
+	SAVE("Save"), //
+	REMOVE("Remove"), //
+	//
+	//
 	NAME_TESTER("Joe"), //
 	AGE_TESTER("5"), //
 	GENDER_TESTER("FEMALE"), //
 	ID_TESTER("045491"), //
-	CITY_TESTER("Oranjestad"), //
+	CITY_TESTER("Abijan"), //
 	COUNTRY_TESTER("Ivory Coast"); //
 	//
 	private final String string;
