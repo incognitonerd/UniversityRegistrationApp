@@ -18,7 +18,7 @@ public class SignupUi extends UI {
 	private SignupFactory signupFactory;
 	
 	@Override
-	protected void init(VaadinRequest request){
+	protected void init(VaadinRequest r){
 		setContent(signupFactory.createComponent());
 	}
 }

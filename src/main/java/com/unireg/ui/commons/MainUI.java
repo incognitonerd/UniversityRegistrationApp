@@ -44,7 +44,7 @@ public class MainUI extends UI {
 	
 	// entry point of the application
 	@Override
-	protected void init(VaadinRequest request){
+	protected void init(VaadinRequest r){
 		/*
 		 * VerticalLayout rL = new VerticalLayout(); rL.addComponent(new Label("Zay's Web App Is Coming Soon! Dushi Bidaaaa!! boston")); setContent(rL);
 		 */
