@@ -8,7 +8,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
-public class UniLogoPanelLayoutFactory implements ComponentBuilder {
+public class LogoPanelLayoutFactory implements ComponentBuilder {
 	private class LogoLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		private Embedded logo;
@@ -29,7 +29,7 @@ public class UniLogoPanelLayoutFactory implements ComponentBuilder {
 		}
 	}
 	
-	public Component createComponent(){
+	public Component buildComponent(){
 		return new LogoLayout().init().layout();
 	}
 }

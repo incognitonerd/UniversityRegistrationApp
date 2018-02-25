@@ -5,6 +5,6 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 public class AbView implements View {
 	private static final long serialVersionUID = 1L;
 	
-	public void enter(ViewChangeEvent event){
+	public void enter(ViewChangeEvent e){
 	}
 }

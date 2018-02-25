@@ -16,8 +16,8 @@ public class AddUniServiceImpl implements AddUniService {
 	public void addUni(University uniDAO){
 		University uni = new University();
 		uni.setName(uniDAO.getName());
-		uni.setCountry(uniDAO.getCountry());
 		uni.setCity(uniDAO.getCity());
+		uni.setCountry(uniDAO.getCountry());
 		addUniRepo.save(uni);
 	}
 }

@@ -12,8 +12,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "STUDENT")
+@Table(name = Student.TABLE_NAME)
 public class Student {
+	public static final String TABLE_NAME = "STUDENT";
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

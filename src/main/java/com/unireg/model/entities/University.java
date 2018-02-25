@@ -7,8 +7,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "UNIVERSITY")
+@Table(name = University.TABLE_NAME)
 public class University {
+	public static final String TABLE_NAME = "UNIVERSITY";
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

@@ -17,9 +17,9 @@ public class AddStuServiceImpl implements AddStuService {
 		Student stu = new Student();
 		stu.setFirstName(stuDAO.getFirstName());
 		stu.setLastName(stuDAO.getLastName());
-		stu.setAge(stuDAO.getAge());
-		stu.setGender(stuDAO.getGender());
 		stu.setUniversity(stuDAO.getUniversity());
+		stu.setGender(stuDAO.getGender());
+		stu.setAge(stuDAO.getAge());
 		addStuRepo.save(stu);
 	}
 }

@@ -4,22 +4,22 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.SingleComponentContainer;
 import com.vaadin.ui.UI;
 
-public class UniNavigator extends Navigator {
+public class UiNavigator extends Navigator {
 	private static final long serialVersionUID = 1L;
 	
-	public UniNavigator(UI ui, SingleComponentContainer container){
+	public UiNavigator(UI ui, SingleComponentContainer container){
 		super(ui, container);
 	}
 	
-	private static UniNavigator getNavigator(){
+	private static UiNavigator getNavigator(){
 		UI ui = UI.getCurrent();
-		Navigator navigator = ui.getNavigator();
-		return (UniNavigator) navigator;
+		Navigator nav = ui.getNavigator();
+		return (UiNavigator) nav;
 	}
 	
 	public static void navigate(String path){
 		try{
-			UniNavigator.getNavigator().navigateTo(path);
+			UiNavigator.getNavigator().navigateTo(path);
 		} catch(Exception e){
 			e.printStackTrace();
 		}

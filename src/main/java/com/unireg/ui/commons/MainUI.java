@@ -1,7 +1,7 @@
 package com.unireg.ui.commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import com.unireg.ui.navigator.UniNavigator;
+import com.unireg.ui.navigator.UiNavigator;
 import com.unireg.ui.students.StuLayoutFactory;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -15,19 +15,21 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SpringUI(path = UniMainUI.NAME)
-@Title("Zay's University App")
-@Theme("valo")
-public class UniMainUI extends UI {
+@SpringUI(path = MainUI.NAME)
+@Title(MainUI.TITLE)
+@Theme(MainUI.THEME)
+public class MainUI extends UI {
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "/ui";
+	public static final String TITLE = "Zay's University App";
+	public static final String THEME = "valo";
 	private Component logo;
 	private Component menu;
 	private VerticalLayout rL;
 	private Panel logoPanel;
 	private Panel contentPanel;
 	private HorizontalLayout hL;
-	private UniNavigator nav;
+	private UiNavigator nav;
 	// manually add an object to the app context
 	@Autowired
 	private ApplicationContext appContext;
@@ -35,15 +37,14 @@ public class UniMainUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 	@Autowired
-	private UniMenuLayoutFactory menuFactory;
+	private MenuLayoutFactory menuFactory;
 	@Autowired
-	private UniLogoPanelLayoutFactory logoFactory;
+	private LogoPanelLayoutFactory logoFactory;
 	private Panel changeTab;
 	
 	// entry point of the application
 	@Override
 	protected void init(VaadinRequest request){
-		// VaadinSession.getCurrent().getSession().setMaxInactiveInterval(9999999);
 		/*
 		 * VerticalLayout rL = new VerticalLayout(); rL.addComponent(new Label("Zay's Web App Is Coming Soon! Dushi Bidaaaa!! boston")); setContent(rL);
 		 */
@@ -61,8 +62,8 @@ public class UniMainUI extends UI {
 		hL = new HorizontalLayout();
 		hL.setSizeFull();
 		hL.setMargin(true);
-		logo = logoFactory.createComponent();
-		menu = menuFactory.createComponent();
+		logo = logoFactory.buildComponent();
+		menu = menuFactory.buildComponent();
 		hL.addComponent(menu);
 		hL.addComponent(changeTab);
 		hL.setComponentAlignment(changeTab, Alignment.TOP_CENTER);
@@ -81,7 +82,7 @@ public class UniMainUI extends UI {
 	}
 	
 	private void initNavigator(){
-		nav = new UniNavigator(this, changeTab);
+		nav = new UiNavigator(this, changeTab);
 		appContext.getAutowireCapableBeanFactory().autowireBean(nav);
 		nav.addProvider(viewProvider);
 		nav.navigateTo(StuLayoutFactory.NAME);

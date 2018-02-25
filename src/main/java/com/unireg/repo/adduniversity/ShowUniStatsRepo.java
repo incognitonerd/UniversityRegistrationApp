@@ -8,5 +8,5 @@ import com.unireg.model.entities.University;
 @Repository
 public interface ShowUniStatsRepo extends JpaRepository<University, Long> {
 	@Query("select count(stu) from Student stu where stu.university.id=:id")
-	Integer getNumOfStusForUniv(@Param("id") Integer id);
+	Integer getNumOfStusForUni(@Param("id") Integer id);
 }

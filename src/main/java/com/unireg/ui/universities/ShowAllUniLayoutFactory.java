@@ -11,44 +11,44 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class ShowAllUniLayoutFactory implements ComponentBuilder {
-	private List<University> universities;
-	private BeanItemContainer<University> container;
+	private List<University> unis;
+	private BeanItemContainer<University> beanContainer;
 	@Autowired
-	private ShowAllUnisService showUniversitiesService;
+	private ShowAllUnisService showUnisService;
 	
 	private class ShowUniversityLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private Grid universityTable;
+		private Grid uniTable;
 		
 		public ShowUniversityLayout init(){
 			setMargin(true);
-			container = new BeanItemContainer<University>(University.class, universities);
-			universityTable = new Grid(container);
-			universityTable.setColumnOrder("name", "city", "country");
-			universityTable.removeColumn("id");
-			universityTable.setImmediate(true);
-			universityTable.setSizeFull();
+			beanContainer = new BeanItemContainer<University>(University.class, unis);
+			uniTable = new Grid(beanContainer);
+			uniTable.setColumnOrder("name", "city", "country");
+			uniTable.removeColumn("id");
+			uniTable.setImmediate(true);
+			uniTable.setSizeFull();
 			return this;
 		}
 		
 		public ShowUniversityLayout layout(){
-			addComponent(universityTable);
+			addComponent(uniTable);
 			return this;
 		}
 		
 		public ShowUniversityLayout load(){
-			universities = showUniversitiesService.getAllUnis();
+			unis = showUnisService.getAllUnis();
 			return this;
 		}
 	}
 	
 	public void refreshTables(){
-		universities = showUniversitiesService.getAllUnis();
-		container.removeAllItems();
-		container.addAll(universities);
+		unis = showUnisService.getAllUnis();
+		beanContainer.removeAllItems();
+		beanContainer.addAll(unis);
 	}
 	
-	public Component createComponent(){
+	public Component buildComponent(){
 		return new ShowUniversityLayout().load().init().layout();
 	}
 }

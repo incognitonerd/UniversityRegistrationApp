@@ -22,57 +22,57 @@ public class AddUniLayoutFactory {
 	@Autowired
 	private AddUniService addUniService;
 	
-	private class AddUniversityLayout extends VerticalLayout implements Button.ClickListener {
+	private class AddUniLayout extends VerticalLayout implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
+		// component names must match the model for the bind
 		private TextField name;
-		private TextField country;
 		private TextField city;
-		private Button cancelButton;
-		private Button saveButton;
-		private BeanFieldGroup<University> fieldGroup;
-		private University university;
+		private TextField country;
+		private Button cancel;
+		private Button save;
+		private BeanFieldGroup<University> beanGroup;
+		private University uni;
 		private UniSavedListener uniSavedListener;
 		
-		public AddUniversityLayout(UniSavedListener uniSavedListener){
+		public AddUniLayout(UniSavedListener uniSavedListener){
 			this.uniSavedListener = uniSavedListener;
-			this.university = new University();
+			this.uni = new University();
 		}
 		
-		public AddUniversityLayout init(){
+		public AddUniLayout init(){
 			name = new TextField(Constants.ADD_UNIVERSITY_NAME.getStr());
-			country = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
 			city = new TextField(Constants.ADD_UNIVERSITY_CITY.getStr());
-			saveButton = new Button(Constants.SAVE.getStr(), this);
-			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			cancelButton = new Button(Constants.CANCEL.getStr(), this);
-			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			country = new TextField(Constants.ADD_UNIVERSITY_COUNTRY.getStr());
+			save = new Button(Constants.SAVE.getStr(), this);
+			save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			cancel = new Button(Constants.CANCEL.getStr(), this);
+			cancel.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			name.setNullRepresentation("");
-			country.setNullRepresentation("");
 			city.setNullRepresentation("");
+			country.setNullRepresentation("");
 			return this;
 		}
 		
-		public AddUniversityLayout bind(){
-			fieldGroup = new BeanFieldGroup<University>(University.class);
-			fieldGroup.bindMemberFields(this);
-			fieldGroup.setItemDataSource(university);
+		public AddUniLayout bind(){
+			beanGroup = new BeanFieldGroup<University>(University.class);
+			beanGroup.bindMemberFields(this);
+			beanGroup.setItemDataSource(uni);
 			return this;
 		}
 		
 		public Component layout(){
 			setWidth("100%");
 			GridLayout grid = new GridLayout(2, 4);
-			// grid.setHeightUndefined();
 			grid.setSpacing(true);
 			grid.addComponent(name, 0, 0, 1, 0);
-			grid.addComponent(country, 0, 1, 1, 1);
-			grid.addComponent(city, 0, 2, 1, 2);
-			grid.addComponent(new HorizontalLayout(cancelButton, saveButton), 0, 3, 0, 3);
+			grid.addComponent(city, 0, 1, 1, 1);
+			grid.addComponent(country, 0, 2, 1, 2);
+			grid.addComponent(new HorizontalLayout(cancel, save), 0, 3, 0, 3);
 			return grid;
 		}
 		
-		public void buttonClick(ClickEvent event){
-			if(event.getSource() == this.saveButton){
+		public void buttonClick(ClickEvent e){
+			if(e.getSource() == this.save){
 				save();
 			} else{
 				clearFields();
@@ -84,7 +84,7 @@ public class AddUniLayoutFactory {
 			if(isOperationInValid()){
 				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE);
-				n.setDelayMsec(200000);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 				n.show(Page.getCurrent());
 			} else{
@@ -95,20 +95,20 @@ public class AddUniLayoutFactory {
 		private void saveUniversity(){
 			Notification n;
 			try{
-				fieldGroup.commit();
+				beanGroup.commit();
 			} catch(CommitException e){
 				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE);
-				n.setDelayMsec(200000);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 				n.show(Page.getCurrent());
 				return;
 			}
-			addUniService.addUni(university);
-			uniSavedListener.universitySaved();
+			addUniService.addUni(uni);
+			uniSavedListener.uniSaved();
 			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
 			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-			n.setDelayMsec(200000);
+			n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 			n.show(Page.getCurrent());
 			clearFields();
 		}
@@ -119,12 +119,12 @@ public class AddUniLayoutFactory {
 		
 		private void clearFields(){
 			name.setValue(null);
-			country.setValue(null);
 			city.setValue(null);
+			country.setValue(null);
 		}
 	}
 	
 	public Component createComponent(UniSavedListener uniSavedListener){
-		return new AddUniversityLayout(uniSavedListener).init().bind().layout();
+		return new AddUniLayout(uniSavedListener).init().bind().layout();
 	}
 }

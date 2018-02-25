@@ -29,26 +29,27 @@ public class AddStuMainLayoutFactory {
 	@Autowired
 	private ShowAllUnisService showAllUnisService;
 	
-	private class AddStudentMainLayout extends VerticalLayout implements ClickListener {
+	private class AddStuMainLayout extends VerticalLayout implements ClickListener {
 		private static final long serialVersionUID = 1L;
+		//component names must match the model for the bind
 		private TextField firstName;
 		private TextField lastName;
 		private TextField age;
 		private ComboBox gender;
-		private Button saveButton;
-		private Button cancelButton;
+		private Button save;
+		private Button cancel;
 		private ComboBox university;
 		private StuSavedListener stuSavedListener;
-		private BeanFieldGroup<Student> beanfieldGroup;
+		private BeanFieldGroup<Student> beanGroup;
 		private Student stu;
 		
-		public AddStudentMainLayout(StuSavedListener stuSavedListener){
+		public AddStuMainLayout(StuSavedListener stuSavedListener){
 			this.stuSavedListener = stuSavedListener;
 			this.stu = new Student();
 		}
 		
-		public AddStudentMainLayout init(){
-			beanfieldGroup = new BeanFieldGroup<Student>(Student.class);
+		public AddStuMainLayout init(){
+			beanGroup = new BeanFieldGroup<Student>(Student.class);
 			firstName = new TextField(Constants.ADD_STUDENT_FIRST_NAME.getStr());
 			lastName = new TextField(Constants.ADD_STUDENT_LAST_NAME.getStr());
 			age = new TextField(Constants.ADD_STUDENT_AGE.getStr());
@@ -58,20 +59,18 @@ public class AddStuMainLayoutFactory {
 			firstName.setNullRepresentation("");
 			lastName.setNullRepresentation("");
 			age.setNullRepresentation("");
-			saveButton = new Button(Constants.SAVE.getStr(), this);
-			cancelButton = new Button(Constants.CANCEL.getStr(), this);
-			// cancelButton.addClickListener(this);
-			// saveButton.addClickListener(this);
-			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-			cancelButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+			save = new Button(Constants.SAVE.getStr(), this);
+			cancel = new Button(Constants.CANCEL.getStr(), this);
+			save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+			cancel.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			gender.addItem(Constants.ADD_STUDENT_FEMALE.getStr());
 			gender.addItem(Constants.ADD_STUDENT_MALE.getStr());
 			return this;
 		}
 		
-		public AddStudentMainLayout bind(){
-			beanfieldGroup.bindMemberFields(this);
-			beanfieldGroup.setItemDataSource(stu);
+		public AddStuMainLayout bind(){
+			beanGroup.bindMemberFields(this);
+			beanGroup.setItemDataSource(stu);
 			return this;
 		}
 		
@@ -84,13 +83,13 @@ public class AddStuMainLayoutFactory {
 			layout.addComponent(age, 0, 1);
 			layout.addComponent(gender, 1, 1);
 			layout.addComponent(university, 0, 2, 1, 2);
-			layout.addComponent(new HorizontalLayout(cancelButton, saveButton), 0, 3);
+			layout.addComponent(new HorizontalLayout(cancel, save), 0, 3);
 			age.clear();
 			return layout;
 		}
 		
-		public void buttonClick(ClickEvent event){
-			if(event.getSource() == this.saveButton){
+		public void buttonClick(ClickEvent e){
+			if(e.getSource() == this.save){
 				save();
 			} else{
 				clearFields();
@@ -98,11 +97,14 @@ public class AddStuMainLayoutFactory {
 		}
 		
 		private void clearFields(){
-			firstName.setValue(null);
-			lastName.setValue(null);
-			age.setValue(null);
-			gender.setValue(null);
-			university.setValue(null);
+			/*
+			 * firstName.setValue(null); lastName.setValue(null); age.setValue(null); gender.setValue(null); uni.setValue(null);
+			 */
+			firstName.clear();
+			lastName.clear();
+			age.clear();
+			gender.clear();
+			university.clear();
 		}
 		
 		private void save(){
@@ -110,22 +112,22 @@ public class AddStuMainLayoutFactory {
 			if(!isOperationValid()){
 				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(200000);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 				n.show(Page.getCurrent());
 			} else{
-				saveStudent();
+				saveStu();
 			}
 		}
 		
-		private void saveStudent(){
+		private void saveStu(){
 			Notification n;
 			try{
-				beanfieldGroup.commit();
+				beanGroup.commit();
 			} catch(CommitException e){
 				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
 						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(200000);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
 				n.show(Page.getCurrent());
 				return;
@@ -134,14 +136,14 @@ public class AddStuMainLayoutFactory {
 			stuSavedListener.studentSaved();
 			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
 			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-			n.setDelayMsec(200000);
+			n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
 			n.show(Page.getCurrent());
 			clearFields();
 		}
 		
-		public AddStudentMainLayout load(){
-			List<University> universities = showAllUnisService.getAllUnis();
-			university.addItems(universities);
+		public AddStuMainLayout load(){
+			List<University> unis = showAllUnisService.getAllUnis();
+			university.addItems(unis);
 			return this;
 		}
 	}
@@ -151,6 +153,6 @@ public class AddStuMainLayoutFactory {
 	}
 	
 	public Component createComponent(StuSavedListener stuSavedListener){
-		return new AddStudentMainLayout(stuSavedListener).init().load().bind().layout();
+		return new AddStuMainLayout(stuSavedListener).init().load().bind().layout();
 	}
 }

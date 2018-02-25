@@ -12,33 +12,33 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class UniStatsLayoutFactory implements ComponentBuilder {
-	private List<University> universities;
+	private List<University> unis;
 	@Autowired
 	private ShowUniStatsService showUniStatsService;
 	@Autowired
-	private ShowAllUnisService universitiesService;
+	private ShowAllUnisService showAllUnisService;
 	
-	private class StatisticsUniversityLayout extends VerticalLayout {
+	private class UniStatsLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 		
 		public Component layout(){
 			setMargin(true);
-			for(University uni: universities){
-				int numOfStudent = showUniStatsService.getStats(uni.getId());
-				Label label = new Label("<p><b>" + uni.getName() + "</b>" + "  -  " + numOfStudent + " students" + "</p>",
+			for(University uni: unis){
+				int numOfStus = showUniStatsService.getStats(uni.getId());
+				Label l = new Label("<p><b>" + uni.getName() + "</b>" + "  -  " + numOfStus + " students" + "</p>",
 						ContentMode.HTML);
-				addComponent(label);
+				addComponent(l);
 			}
 			return this;
 		}
 		
-		public StatisticsUniversityLayout load(){
-			universities = universitiesService.getAllUnis();
+		public UniStatsLayout load(){
+			unis = showAllUnisService.getAllUnis();
 			return this;
 		}
 	}
 	
-	public Component createComponent(){
-		return new StatisticsUniversityLayout().load().layout();
+	public Component buildComponent(){
+		return new UniStatsLayout().load().layout();
 	}
 }

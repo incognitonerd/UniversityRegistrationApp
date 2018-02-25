@@ -11,7 +11,7 @@ public class ShowUniStatsServiceImpl implements ShowUniStatsService {
 	@Autowired
 	private ShowUniStatsRepo getUniStatsRepo;
 	
-	public Integer getStats(Integer universityId){
-		return getUniStatsRepo.getNumOfStusForUniv(universityId);
+	public Integer getStats(Integer uniId){
+		return getUniStatsRepo.getNumOfStusForUni(uniId);
 	}
 }

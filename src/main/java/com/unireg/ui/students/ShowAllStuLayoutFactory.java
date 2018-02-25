@@ -11,47 +11,45 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class ShowAllStuLayoutFactory implements ComponentBuilder {
-	private List<Student> students;
-	private BeanItemContainer<Student> container;
+	private List<Student> stus;
+	private BeanItemContainer<Student> beanContainer;
 	@Autowired
 	private ShowStuService showStuService;
 	
-	private class ShowAllStudentsLayout extends VerticalLayout {
+	private class ShowAllStusLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private Grid studentsTable;
+		private Grid stuTable;
 		
-		public ShowAllStudentsLayout init(){
+		public ShowAllStusLayout init(){
 			setMargin(true);
-			container = new BeanItemContainer<Student>(Student.class, students);
-			studentsTable = new Grid(container);
-			studentsTable.setColumnOrder("firstName", "lastName", "age", "gender");
-			studentsTable.removeColumn("id");
-			studentsTable.removeColumn("university");
-			studentsTable.setImmediate(true);
-			studentsTable.setSizeFull();
-			// studentsTable.setHeight("90%");
-			// studentsTable.setWidth("90%");
+			beanContainer = new BeanItemContainer<Student>(Student.class, stus);
+			stuTable = new Grid(beanContainer);
+			stuTable.setColumnOrder("firstName", "lastName", "age", "gender");
+			stuTable.removeColumn("id");
+			stuTable.removeColumn("university");
+			stuTable.setImmediate(true);
+			stuTable.setSizeFull();
 			return this;
 		}
 		
-		public ShowAllStudentsLayout layout(){
-			addComponent(studentsTable);
+		public ShowAllStusLayout layout(){
+			addComponent(stuTable);
 			return this;
 		}
 		
-		public ShowAllStudentsLayout load(){
-			students = showStuService.getAllStu();
+		public ShowAllStusLayout load(){
+			stus = showStuService.getAllStu();
 			return this;
 		}
 	}
 	
 	public void refreshTables(){
-		students = showStuService.getAllStu();
-		container.removeAllItems();
-		container.addAll(students);
+		stus = showStuService.getAllStu();
+		beanContainer.removeAllItems();
+		beanContainer.addAll(stus);
 	}
 	
-	public Component createComponent(){
-		return new ShowAllStudentsLayout().load().init().layout();
+	public Component buildComponent(){
+		return new ShowAllStusLayout().load().init().layout();
 	}
 }

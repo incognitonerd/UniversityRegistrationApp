@@ -1,6 +1,6 @@
 package com.unireg.ui.universities;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.unireg.ui.commons.UniMainUI;
+import com.unireg.ui.commons.MainUI;
 import com.unireg.utils.Constants;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -10,36 +10,36 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
 //ui tells it which view it belongs to
-@SpringView(name = UniLayoutFactory.NAME, ui = UniMainUI.class)
+@SpringView(name = UniLayoutFactory.NAME, ui = MainUI.class)
 public class UniLayoutFactory extends VerticalLayout implements View, UniSavedListener {
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "adduniversity";
 	private TabSheet tabSheet;
 	@Autowired
-	private AddUniLayoutFactory addUniversityFactory;
+	private AddUniLayoutFactory addUniFactory;
 	@Autowired
-	private ShowAllUniLayoutFactory showUniversitiesFactory;
+	private ShowAllUniLayoutFactory showUnisFactory;
 	@Autowired
-	private UniStatsLayoutFactory statisticsUniversityFactory;
+	private UniStatsLayoutFactory uniStatsFactory;
 	
 	private void addLayout(){
 		setMargin(true);
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
-		Component addUniversityTab = addUniversityFactory.createComponent(this);
-		Component showUniversityTab = showUniversitiesFactory.createComponent();
-		Component chartUniversityTab = statisticsUniversityFactory.createComponent();
-		tabSheet.addTab(addUniversityTab, Constants.ADD_UNIVERSITY_MAIN_MENU.getStr());
-		tabSheet.addTab(showUniversityTab, Constants.MENU_SHOW_UNIVERSITY.getStr());
-		tabSheet.addTab(chartUniversityTab, Constants.MENU_CHART_UNIVERSITY.getStr());
+		Component addUniTab = addUniFactory.createComponent(this);
+		Component showUnisTab = showUnisFactory.buildComponent();
+		Component uniStatsTab = uniStatsFactory.buildComponent();
+		tabSheet.addTab(addUniTab, Constants.ADD_UNIVERSITY_MAIN_MENU.getStr());
+		tabSheet.addTab(showUnisTab, Constants.MENU_SHOW_UNIVERSITY.getStr());
+		tabSheet.addTab(uniStatsTab, Constants.MENU_CHART_UNIVERSITY.getStr());
 		addComponent(tabSheet);
 	}
 	
-	public void universitySaved(){
-		showUniversitiesFactory.refreshTables();
+	public void uniSaved(){
+		showUnisFactory.refreshTables();
 	}
 	
-	public void enter(ViewChangeEvent event){
+	public void enter(ViewChangeEvent e){
 		removeAllComponents();
 		addLayout();
 	}
