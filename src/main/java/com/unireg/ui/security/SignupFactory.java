@@ -6,7 +6,6 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -24,7 +23,8 @@ public class SignupFactory {
 	@Autowired
 	private RegisterUserService regUserService;
 	
-	private class SignupForm {
+	private class SignupForm implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 		private VerticalLayout vl;
 		private Panel mainPanel;
 		private TextField username;
@@ -39,55 +39,62 @@ public class SignupFactory {
 			vl.setHeight("100%");
 			mainPanel = new Panel(Constants.SIGN_UP.getStr());
 			mainPanel.setSizeUndefined();
-			signup = new Button(Constants.SIGN_UP.getStr());
-			cancel = new Button(Constants.CANCEL.getStr());
+			signup = new Button(Constants.SIGN_UP.getStr(), this);
+			cancel = new Button(Constants.CANCEL.getStr(), this);
 			signup.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			cancel.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			username = new TextField(Constants.USERNAME.getStr());
 			password1 = new PasswordField(Constants.PASSWORD.getStr());
 			password2 = new PasswordField(Constants.PASSWORD.getStr());
-			signup.addClickListener(new ClickListener() {
-				private static final long serialVersionUID = 689532066935231599L;
-				
-				public void buttonClick(ClickEvent event){
-					Notification n;
-					if(isValid()){
-						try{
-							regUserService.save(username.getValue(), password2.getValue());
-						} catch(Exception e){
-							String errMsg = username.getValue().toString() + Constants.IS_UNAVAILABLE.getStr();
-							clearFields();
-							n = new Notification(Constants.ERROR.getStr(), errMsg, Type.ERROR_MESSAGE, true);
-							n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-							n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-							n.show(Page.getCurrent());
-							return;
-						}
-						clearFields();
-						n = new Notification(Constants.SUCCESSFULLY_REGISTERED.getStr(), Type.WARNING_MESSAGE);
-						n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-						n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-						n.show(Page.getCurrent());
-						// UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
-					}
-					clearFields();
-				}
-			});
-			cancel.addClickListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-				
-				public void buttonClick(ClickEvent event){
-					clearFields();
-					UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
-				}
-			});
 			return this;
 		}
 		
-		public void clearFields(){
-			username.clear();
-			password1.clear();
-			password2.clear();
+		public Component layout(){
+			vl.addComponent(mainPanel);
+			vl.setComponentAlignment(mainPanel, Alignment.MIDDLE_CENTER);
+			FormLayout signupLayout = new FormLayout();
+			signupLayout.addComponent(username);
+			signupLayout.addComponent(password1);
+			signupLayout.addComponent(password2);
+			signupLayout.addComponent(new HorizontalLayout(cancel, signup));
+			signupLayout.setSizeUndefined();
+			signupLayout.setMargin(true);
+			mainPanel.setContent(signupLayout);
+			return vl;
+		}
+		
+		@Override
+		public void buttonClick(ClickEvent e){
+			if(e.getSource() == this.signup){
+				signup();
+			} else{
+				clearFields();
+				UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
+			}
+		}
+		
+		private void signup(){
+			Notification n;
+			if(isValid()){
+				try{
+					regUserService.save(username.getValue(), password2.getValue());
+				} catch(Exception ex){
+					String errMsg = username.getValue().toString() + Constants.IS_UNAVAILABLE.getStr();
+					clearFields();
+					n = new Notification(Constants.ERROR.getStr(), errMsg, Type.ERROR_MESSAGE, true);
+					n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
+					n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+					n.show(Page.getCurrent());
+					return;
+				}
+				clearFields();
+				n = new Notification(Constants.SUCCESSFULLY_REGISTERED.getStr(), Type.WARNING_MESSAGE);
+				n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
+				n.show(Page.getCurrent());
+				// UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
+			}
+			clearFields();
 		}
 		
 		public Boolean isValid(){
@@ -111,18 +118,10 @@ public class SignupFactory {
 			}
 		}
 		
-		public Component layout(){
-			vl.addComponent(mainPanel);
-			vl.setComponentAlignment(mainPanel, Alignment.MIDDLE_CENTER);
-			FormLayout signupLayout = new FormLayout();
-			signupLayout.addComponent(username);
-			signupLayout.addComponent(password1);
-			signupLayout.addComponent(password2);
-			signupLayout.addComponent(new HorizontalLayout(cancel, signup));
-			signupLayout.setSizeUndefined();
-			signupLayout.setMargin(true);
-			mainPanel.setContent(signupLayout);
-			return vl;
+		public void clearFields(){
+			username.clear();
+			password1.clear();
+			password2.clear();
 		}
 	}
 	

@@ -10,7 +10,6 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -28,7 +27,8 @@ public class LoginFactory {
 	@Autowired
 	private DaoAuthenticationProvider daoAuthenticationProvider;
 	
-	private class LoginForm {
+	private class LoginForm implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 		private VerticalLayout vl;
 		private Panel mainPanel;
 		private TextField username;
@@ -42,8 +42,8 @@ public class LoginFactory {
 			vl.setHeight("100%");
 			mainPanel = new Panel(Constants.LOGIN.getStr());
 			mainPanel.setSizeUndefined();
-			login = new Button(Constants.LOGIN.getStr());
-			signup = new Button(Constants.SIGN_UP.getStr());
+			login = new Button(Constants.LOGIN.getStr(), this);
+			signup = new Button(Constants.SIGN_UP.getStr(), this);
 			login.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			signup.setStyleName(ValoTheme.BUTTON_PRIMARY);
 			username = new TextField(Constants.USERNAME.getStr());
@@ -60,45 +60,44 @@ public class LoginFactory {
 			form.addComponent(new HorizontalLayout(signup, login));
 			form.setSizeUndefined();
 			form.setMargin(true);
-			login.addClickListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-				
-				public void buttonClick(ClickEvent event){
-					Notification n;
-					if(username.getValue().isEmpty() || password.getValue().isEmpty()){
-						clearFields();
-						n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION
-								.getStr(), Type.ERROR_MESSAGE, true);
-						n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-						n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-						n.show(Page.getCurrent());
-						return;
-					}
-					try{
-						Authentication auth = new UsernamePasswordAuthenticationToken(username.getValue(), password
-								.getValue());
-						Authentication authenticate = daoAuthenticationProvider.authenticate(auth);
-						SecurityContextHolder.getContext().setAuthentication(authenticate);
-						UI.getCurrent().getPage().setLocation(Constants.UI_URL.getStr());
-					} catch(AuthenticationException e){
-						clearFields();
-						n = new Notification(Constants.ERROR.getStr(), Constants.UNRECOGNIZED_USERNAME_PASSWORD.getStr(),
-								Type.ERROR_MESSAGE, true);
-						n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-						n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-						n.show(Page.getCurrent());
-					}
-				}
-			});
-			signup.addClickListener(new ClickListener() {
-				private static final long serialVersionUID = 1L;
-				
-				public void buttonClick(ClickEvent event){
-					UI.getCurrent().getPage().setLocation(Constants.SIGNUP_URL.getStr());
-				}
-			});
 			mainPanel.setContent(form);
 			return vl;
+		}
+		
+		@Override
+		public void buttonClick(ClickEvent e){
+			if(e.getSource() == this.login){
+				login();
+			} else{
+				clearFields();
+				UI.getCurrent().getPage().setLocation(Constants.SIGNUP_URL.getStr());
+			}
+		}
+		
+		private void login(){
+			Notification n;
+			if(username.getValue().isEmpty() || password.getValue().isEmpty()){
+				clearFields();
+				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+						Type.ERROR_MESSAGE, true);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
+				return;
+			}
+			try{
+				Authentication auth = new UsernamePasswordAuthenticationToken(username.getValue(), password.getValue());
+				Authentication authenticate = daoAuthenticationProvider.authenticate(auth);
+				SecurityContextHolder.getContext().setAuthentication(authenticate);
+				UI.getCurrent().getPage().setLocation(Constants.UI_URL.getStr());
+			} catch(AuthenticationException ex){
+				clearFields();
+				n = new Notification(Constants.ERROR.getStr(), Constants.UNRECOGNIZED_USERNAME_PASSWORD.getStr(),
+						Type.ERROR_MESSAGE, true);
+				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
+				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+				n.show(Page.getCurrent());
+			}
 		}
 		
 		public void clearFields(){

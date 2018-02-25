@@ -31,7 +31,7 @@ public class AddStuMainLayoutFactory {
 	
 	private class AddStuMainLayout extends VerticalLayout implements ClickListener {
 		private static final long serialVersionUID = 1L;
-		//component names must match the model for the bind
+		// component names must match the model for the bind
 		private TextField firstName;
 		private TextField lastName;
 		private TextField age;
@@ -97,14 +97,11 @@ public class AddStuMainLayoutFactory {
 		}
 		
 		private void clearFields(){
-			/*
-			 * firstName.setValue(null); lastName.setValue(null); age.setValue(null); gender.setValue(null); uni.setValue(null);
-			 */
-			firstName.clear();
-			lastName.clear();
-			age.clear();
-			gender.clear();
-			university.clear();
+			firstName.setValue(null);
+			lastName.setValue(null);
+			age.setValue(null);
+			gender.setValue(null);
+			university.setValue(null);
 		}
 		
 		private void save(){

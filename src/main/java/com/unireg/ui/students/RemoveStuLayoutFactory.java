@@ -38,8 +38,8 @@ public class RemoveStuLayoutFactory extends VerticalLayout implements View, Butt
 	BeanItemContainer<Student> beanContainer;
 	
 	private void init(){
-		remove = new Button(Constants.REMOVE.getStr());
-		cancel = new Button(Constants.CANCEL.getStr());
+		remove = new Button(Constants.REMOVE.getStr(), this);
+		cancel = new Button(Constants.CANCEL.getStr(), this);
 		beanContainer = new BeanItemContainer<Student>(Student.class, stus);
 		stuTable = new Grid(beanContainer);
 	}
@@ -52,8 +52,6 @@ public class RemoveStuLayoutFactory extends VerticalLayout implements View, Butt
 		stuTable.setImmediate(true);
 		stuTable.setSelectionMode(SelectionMode.MULTI);
 		stuTable.setSizeFull();
-		cancel.addClickListener(this);
-		remove.addClickListener(this);
 		remove.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		cancel.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		addComponent(stuTable);

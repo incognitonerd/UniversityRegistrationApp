@@ -47,8 +47,8 @@ public class MenuLayoutFactory implements ComponentBuilder {
 			return this;
 		}
 		
-		public void valueChange(ValueChangeEvent event){
-			String tab = (String) event.getProperty().getValue();
+		public void valueChange(ValueChangeEvent e){
+			String tab = (String) e.getProperty().getValue();
 			if(tab == null){
 				return;
 			}

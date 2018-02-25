@@ -68,7 +68,9 @@ public enum Constants{
 	GENDER_TESTER("FEMALE"), //
 	ID_TESTER("045491"), //
 	CITY_TESTER("Abijan"), //
-	COUNTRY_TESTER("Ivory Coast"); //
+	COUNTRY_TESTER("Ivory Coast"), //
+	USERNAME_TESTER("wakamba"), //
+	PASSWORD_TESTER("africa"); //
 	//
 	//
 	//
