@@ -20,10 +20,13 @@ Database Connections -
 * Hibernate - vendor to implement the jpa specifications  
 
 Wiring the technologies together -  
-* Spring framework for java enterprise projects  - develop enterprise applications using pojos instead of beans, forces programmers to use the best-known practices. Handles instantiating classes.  
+* Spring framework for java enterprise projects  - develop enterprise applications using pojos instead of beans, forces programmers to use the best-known practices. Handles instantiating classes (dependency injection).  
 
 UI Components -   
 * Vaadin Framework - To build UI related applications. Don't have to worry about html or css related stuff  
 
+Authentication -  
+* Spring Security - Encrypts passwords when adding a user and validates user when signing in
+
 Testing -    
-* Junit - unit testing  
+* Junit - Unit testing  
