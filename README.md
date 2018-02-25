@@ -1,6 +1,6 @@
 # UniversityRegistrationApp
 
-Simple application that displays a few basic architectural principles such as how to connect to a database, how to create repositories, and how to create services in an efficient manner. Users land on a home page and from there, they are able to add a university, add a student, remove a student, see a list of all the added students, see a list of all of the added universities, and view the university statistics as to how many students are registered.  
+Simple application that displays a few basic architectural principles such as authentication, how to connect to a database, how to create repositories, and how to create services in an efficient manner. Users land on a log in page and from there, they're able to log in or sign up. Once logged in, users are able to add a university, add a student, remove a student, see a list of all the added students, see a list of all of the added universities, and view the university statistics as to how many students are registered.  
 
 Dev Environment -  
 * Github - Code repository  
