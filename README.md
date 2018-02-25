@@ -4,7 +4,7 @@ Simple application that displays a few basic architectural principles such as au
 
 Dev Environment -  
 * Github - Code repository  
-* Jenkins Server - Continuous integration continious deployment build tool  
+* Jenkins Server - Continuous integration continuous deployment build tool  
 * Ubuntu Server - Linux box to host my applications  
 * Macbook Pro - My personal machine  
 * Eclipse Java EE - IDE
