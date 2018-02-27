@@ -2,7 +2,7 @@ package com.unireg.utils;
 public enum Constants{
 	LOGIN_URL("/ZaysUniversityRegistrationApp/login"), //
 	SIGNUP_URL("/ZaysUniversityRegistrationApp/signup"), //
-	UI_URL("/ZaysUniversityRegistrationApp/home"), //
+	UI_URL("/ZaysUniversityRegistrationApp/ui"), //
 	VAADIN_SERVLET_ENDPOINT("/vaadinServlet/**"), //
 	VAADIN_ENDPOINT("/VAADIN/**"), //
 	PUSH_ENDPOINT("/PUSH/**"), //
@@ -11,8 +11,8 @@ public enum Constants{
 	LOGIN_CHILDREN_ENDPOINT("/login/**"), //
 	LOGOUT_ENDPOINT("/logout"), //
 	SIGNUP_ENDPOINT("/signup"), //
-	UI_ENDPOINT("/home"), //
-	UI_CHILDREN_ENDPOINT("/home/**"), //
+	UI_ENDPOINT("/ui"), //
+	UI_CHILDREN_ENDPOINT("/ui/**"), //
 	//
 	LOGIN("Log In"), //
 	USERNAME("Username"), //

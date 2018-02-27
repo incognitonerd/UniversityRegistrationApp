@@ -23,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 public class HomeUI extends UI {
 	private static final Logger LOG = LoggerFactory.getLogger(HomeUI.class);
 	private static final long serialVersionUID = 1L;
-	public static final String NAME = "/home";
+	public static final String NAME = "/ui";
 	public static final String TITLE = "Zay's University App";
 	public static final String THEME = "valo";
 	private Component logo;
