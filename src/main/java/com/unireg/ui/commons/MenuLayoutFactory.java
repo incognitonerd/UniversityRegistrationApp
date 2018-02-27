@@ -1,4 +1,6 @@
 package com.unireg.ui.commons;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.unireg.ui.navigator.UiNavigator;
 import com.unireg.ui.views.ComponentBuilder;
@@ -12,6 +14,8 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class MenuLayoutFactory implements ComponentBuilder {
+	private static final Logger LOG = LoggerFactory.getLogger(MenuLayoutFactory.class);
+	
 	private class UniversityMenu extends VerticalLayout implements Property.ValueChangeListener {
 		private static final long serialVersionUID = 1L;
 		private Tree mainMenu;
@@ -48,21 +52,25 @@ public class MenuLayoutFactory implements ComponentBuilder {
 		}
 		
 		public void valueChange(ValueChangeEvent e){
-			String tab = (String) e.getProperty().getValue();
-			if(tab == null){
-				return;
-			}
-			if(tab.compareTo(Constants.LOG_OUT.getStr()) == 0){
-				SecurityContextHolder.clearContext();
-				UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
-			}
-			if(tab.compareToIgnoreCase(Constants.STUDENTS_ADD_STUDENT.getStr()) == 0
-					|| tab.compareToIgnoreCase(Constants.STUDENTS_REMOVE_STUDENT.getStr()) == 0
-					|| tab.compareToIgnoreCase(Constants.UNIVERSITIES_ADD_UNIVERSITY.getStr()) == 0){
-				String path = tab.toLowerCase().replaceAll("\\s+", "");
-				UiNavigator.navigate(path);
-			} else{
-				return;
+			try{
+				String tab = (String) e.getProperty().getValue();
+				if(tab == null){
+					return;
+				}
+				if(tab.compareTo(Constants.LOG_OUT.getStr()) == 0){
+					SecurityContextHolder.clearContext();
+					UI.getCurrent().getPage().setLocation(Constants.LOGIN_URL.getStr());
+				}
+				if(tab.compareToIgnoreCase(Constants.STUDENTS_ADD_STUDENT.getStr()) == 0
+						|| tab.compareToIgnoreCase(Constants.STUDENTS_REMOVE_STUDENT.getStr()) == 0
+						|| tab.compareToIgnoreCase(Constants.UNIVERSITIES_ADD_UNIVERSITY.getStr()) == 0){
+					String path = tab.toLowerCase().replaceAll("\\s+", "");
+					UiNavigator.navigate(path);
+				} else{
+					return;
+				}
+			} catch(Exception ex){
+				LOG.info("Exception: " + e);
 			}
 		}
 	}

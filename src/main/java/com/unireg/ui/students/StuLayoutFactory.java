@@ -1,6 +1,8 @@
 package com.unireg.ui.students;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.unireg.ui.commons.MainUI;
+import com.unireg.ui.commons.HomeUI;
 import com.unireg.utils.Constants;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -9,8 +11,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-@SpringView(name = StuLayoutFactory.NAME, ui = MainUI.class)
+@SpringView(name = StuLayoutFactory.NAME, ui = HomeUI.class)
 public class StuLayoutFactory extends VerticalLayout implements View, StuSavedListener {
+	private static final Logger LOG = LoggerFactory.getLogger(StuLayoutFactory.class);
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "addstudent";
 	private TabSheet tabSheet;
@@ -31,7 +34,11 @@ public class StuLayoutFactory extends VerticalLayout implements View, StuSavedLi
 	}
 	
 	public void studentSaved(){
-		showAllStusFactory.refreshTables();
+		try{
+			showAllStusFactory.refreshTables();
+		} catch(Exception e){
+			LOG.info("Exception: " + e);
+		}
 	}
 	
 	public void enter(ViewChangeEvent e){

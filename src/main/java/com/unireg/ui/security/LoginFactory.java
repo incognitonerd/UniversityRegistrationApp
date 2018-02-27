@@ -1,4 +1,6 @@
 package com.unireg.ui.security;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,6 +26,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class LoginFactory {
+	private static final Logger LOG = LoggerFactory.getLogger(LoginFactory.class);
 	@Autowired
 	private DaoAuthenticationProvider daoAuthenticationProvider;
 	
@@ -35,6 +38,7 @@ public class LoginFactory {
 		private PasswordField password;
 		private Button login;
 		private Button signup;
+		private Notification n;
 		
 		public LoginForm init(){
 			vl = new VerticalLayout();
@@ -75,14 +79,9 @@ public class LoginFactory {
 		}
 		
 		private void login(){
-			Notification n;
 			if(username.getValue().isEmpty() || password.getValue().isEmpty()){
 				clearFields();
-				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
+				blankFieldErr();
 				return;
 			}
 			try{
@@ -91,18 +90,31 @@ public class LoginFactory {
 				SecurityContextHolder.getContext().setAuthentication(authenticate);
 				UI.getCurrent().getPage().setLocation(Constants.UI_URL.getStr());
 			} catch(AuthenticationException ex){
+				LOG.info("Exception: " + ex);
 				clearFields();
-				n = new Notification(Constants.ERROR.getStr(), Constants.UNRECOGNIZED_USERNAME_PASSWORD.getStr(),
-						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
+				usernameAndPwErr();
 			}
 		}
 		
 		public void clearFields(){
 			username.clear();
 			password.clear();
+		}
+		
+		public void blankFieldErr(){
+			n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+					Type.ERROR_MESSAGE, true);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.show(Page.getCurrent());
+		}
+		
+		public void usernameAndPwErr(){
+			n = new Notification(Constants.ERROR.getStr(), Constants.UNRECOGNIZED_USERNAME_PASSWORD.getStr(),
+					Type.ERROR_MESSAGE, true);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.show(Page.getCurrent());
 		}
 	}
 	

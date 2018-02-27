@@ -19,6 +19,9 @@ public class LoginUi extends UI {
 	
 	@Override
 	protected void init(VaadinRequest request){
+		try{
+		} catch(Exception e){
+		}
 		setContent(loginFactory.createComponent());
 	}
 }

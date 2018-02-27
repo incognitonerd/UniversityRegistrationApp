@@ -2,7 +2,7 @@ package com.unireg.utils;
 public enum Constants{
 	LOGIN_URL("/ZaysUniversityRegistrationApp/login"), //
 	SIGNUP_URL("/ZaysUniversityRegistrationApp/signup"), //
-	UI_URL("/ZaysUniversityRegistrationApp/ui"), //
+	UI_URL("/ZaysUniversityRegistrationApp/home"), //
 	VAADIN_SERVLET_ENDPOINT("/vaadinServlet/**"), //
 	VAADIN_ENDPOINT("/VAADIN/**"), //
 	PUSH_ENDPOINT("/PUSH/**"), //
@@ -11,8 +11,8 @@ public enum Constants{
 	LOGIN_CHILDREN_ENDPOINT("/login/**"), //
 	LOGOUT_ENDPOINT("/logout"), //
 	SIGNUP_ENDPOINT("/signup"), //
-	UI_ENDPOINT("/ui"), //
-	UI_CHILDREN_ENDPOINT("/ui/**"), //
+	UI_ENDPOINT("/home"), //
+	UI_CHILDREN_ENDPOINT("/home/**"), //
 	//
 	LOGIN("Log In"), //
 	USERNAME("Username"), //
@@ -47,7 +47,7 @@ public enum Constants{
 	LOG_OUT_PARENT("LOG OUT"), //
 	LOG_OUT("Log Out"), //
 	//
-	TEN_SECS("10000"), //
+	NEG_ONE("-1"), //
 	//
 	ERROR("Error!"), //
 	UNRECOGNIZED_USERNAME_PASSWORD("Unrecognized Username And Password"), //

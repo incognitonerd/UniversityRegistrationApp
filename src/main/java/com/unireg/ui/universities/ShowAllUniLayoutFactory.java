@@ -1,5 +1,7 @@
 package com.unireg.ui.universities;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unireg.model.entities.University;
 import com.unireg.services.ShowAllUnisService;
@@ -11,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class ShowAllUniLayoutFactory implements ComponentBuilder {
+	private static final Logger LOG = LoggerFactory.getLogger(ShowAllUniLayoutFactory.class);
 	private List<University> unis;
 	private BeanItemContainer<University> beanContainer;
 	@Autowired
@@ -43,9 +46,13 @@ public class ShowAllUniLayoutFactory implements ComponentBuilder {
 	}
 	
 	public void refreshTables(){
-		unis = showUnisService.getAllUnis();
-		beanContainer.removeAllItems();
-		beanContainer.addAll(unis);
+		try{
+			unis = showUnisService.getAllUnis();
+			beanContainer.removeAllItems();
+			beanContainer.addAll(unis);
+		} catch(Exception e){
+			LOG.info("Exception: " + e);
+		}
 	}
 	
 	public Component buildComponent(){

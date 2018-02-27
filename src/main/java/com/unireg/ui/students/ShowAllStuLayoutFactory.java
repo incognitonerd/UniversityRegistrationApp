@@ -1,5 +1,7 @@
 package com.unireg.ui.students;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unireg.model.entities.Student;
 import com.unireg.services.ShowStuService;
@@ -11,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @org.springframework.stereotype.Component
 public class ShowAllStuLayoutFactory implements ComponentBuilder {
+	private static final Logger LOG = LoggerFactory.getLogger(ShowAllStuLayoutFactory.class);
 	private List<Student> stus;
 	private BeanItemContainer<Student> beanContainer;
 	@Autowired
@@ -33,8 +36,13 @@ public class ShowAllStuLayoutFactory implements ComponentBuilder {
 		}
 		
 		public ShowAllStusLayout layout(){
-			addComponent(stuTable);
-			return this;
+			try{
+				addComponent(stuTable);
+				return this;
+			} catch(Exception e){
+				LOG.info("Exception: " + e);
+				return null;
+			}
 		}
 		
 		public ShowAllStusLayout load(){
@@ -44,9 +52,13 @@ public class ShowAllStuLayoutFactory implements ComponentBuilder {
 	}
 	
 	public void refreshTables(){
-		stus = showStuService.getAllStu();
-		beanContainer.removeAllItems();
-		beanContainer.addAll(stus);
+		try{
+			stus = showStuService.getAllStu();
+			beanContainer.removeAllItems();
+			beanContainer.addAll(stus);
+		} catch(Exception e){
+			LOG.info("Exception: " + e);
+		}
 	}
 	
 	public Component buildComponent(){

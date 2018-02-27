@@ -1,4 +1,6 @@
 package com.unireg.ui.universities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unireg.model.entities.University;
 import com.unireg.services.AddUniService;
@@ -19,6 +21,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class AddUniLayoutFactory {
+	private static final Logger LOG = LoggerFactory.getLogger(AddUniLayoutFactory.class);
 	@Autowired
 	private AddUniService addUniService;
 	
@@ -33,6 +36,7 @@ public class AddUniLayoutFactory {
 		private BeanFieldGroup<University> beanGroup;
 		private University uni;
 		private UniSavedListener uniSavedListener;
+		private Notification n;
 		
 		public AddUniLayout(UniSavedListener uniSavedListener){
 			this.uniSavedListener = uniSavedListener;
@@ -54,10 +58,15 @@ public class AddUniLayoutFactory {
 		}
 		
 		public AddUniLayout bind(){
-			beanGroup = new BeanFieldGroup<University>(University.class);
-			beanGroup.bindMemberFields(this);
-			beanGroup.setItemDataSource(uni);
-			return this;
+			try{
+				beanGroup = new BeanFieldGroup<University>(University.class);
+				beanGroup.bindMemberFields(this);
+				beanGroup.setItemDataSource(uni);
+				return this;
+			} catch(Exception e){
+				LOG.info("Exception: " + e);
+				return null;
+			}
 		}
 		
 		public Component layout(){
@@ -80,40 +89,27 @@ public class AddUniLayoutFactory {
 		}
 		
 		private void save(){
-			Notification n;
-			if(isOperationInValid()){
-				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
+			if(isOperationInvalid()){
+				errNotification();
 			} else{
 				saveUniversity();
 			}
 		}
 		
 		private void saveUniversity(){
-			Notification n;
 			try{
 				beanGroup.commit();
+				addUniService.addUni(uni);
+				uniSavedListener.uniSaved();
+				clearFields();
+				successNotificiation();
 			} catch(CommitException e){
-				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
-				return;
+				LOG.info("Exception: " + e);
+				errNotification();
 			}
-			addUniService.addUni(uni);
-			uniSavedListener.uniSaved();
-			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
-			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-			n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-			n.show(Page.getCurrent());
-			clearFields();
 		}
 		
-		private boolean isOperationInValid(){
+		private boolean isOperationInvalid(){
 			return name.isEmpty() || country.isEmpty() || city.isEmpty();
 		}
 		
@@ -121,6 +117,21 @@ public class AddUniLayoutFactory {
 			name.setValue(null);
 			city.setValue(null);
 			country.setValue(null);
+		}
+		
+		private void errNotification(){
+			n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+					Type.ERROR_MESSAGE);
+			n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.show(Page.getCurrent());
+		}
+		
+		private void successNotificiation(){
+			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
+			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.show(Page.getCurrent());
 		}
 	}
 	

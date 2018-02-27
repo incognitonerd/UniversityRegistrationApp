@@ -1,4 +1,6 @@
 package com.unireg.ui.commons;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import com.unireg.ui.navigator.UiNavigator;
@@ -15,12 +17,13 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SpringUI(path = MainUI.NAME)
-@Title(MainUI.TITLE)
-@Theme(MainUI.THEME)
-public class MainUI extends UI {
+@SpringUI(path = HomeUI.NAME)
+@Title(HomeUI.TITLE)
+@Theme(HomeUI.THEME)
+public class HomeUI extends UI {
+	private static final Logger LOG = LoggerFactory.getLogger(HomeUI.class);
 	private static final long serialVersionUID = 1L;
-	public static final String NAME = "/ui";
+	public static final String NAME = "/home";
 	public static final String TITLE = "Zay's University App";
 	public static final String THEME = "valo";
 	private Component logo;
@@ -82,9 +85,13 @@ public class MainUI extends UI {
 	}
 	
 	private void initNavigator(){
-		nav = new UiNavigator(this, changeTab);
-		appContext.getAutowireCapableBeanFactory().autowireBean(nav);
-		nav.addProvider(viewProvider);
-		nav.navigateTo(StuLayoutFactory.NAME);
+		try{
+			nav = new UiNavigator(this, changeTab);
+			appContext.getAutowireCapableBeanFactory().autowireBean(nav);
+			nav.addProvider(viewProvider);
+			nav.navigateTo(StuLayoutFactory.NAME);
+		} catch(Exception e){
+			LOG.info("Exception: " + e);
+		}
 	}
 }

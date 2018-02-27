@@ -1,5 +1,7 @@
 package com.unireg.ui.students;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.unireg.model.entities.Student;
 import com.unireg.model.entities.University;
@@ -24,6 +26,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 @org.springframework.stereotype.Component
 public class AddStuMainLayoutFactory {
+	private static final Logger LOG = LoggerFactory.getLogger(AddStuMainLayoutFactory.class);
 	@Autowired
 	private AddStuService addStuService;
 	@Autowired
@@ -36,12 +39,13 @@ public class AddStuMainLayoutFactory {
 		private TextField lastName;
 		private TextField age;
 		private ComboBox gender;
+		private ComboBox university;
 		private Button save;
 		private Button cancel;
-		private ComboBox university;
 		private StuSavedListener stuSavedListener;
 		private BeanFieldGroup<Student> beanGroup;
 		private Student stu;
+		private Notification n;
 		
 		public AddStuMainLayout(StuSavedListener stuSavedListener){
 			this.stuSavedListener = stuSavedListener;
@@ -69,9 +73,14 @@ public class AddStuMainLayoutFactory {
 		}
 		
 		public AddStuMainLayout bind(){
-			beanGroup.bindMemberFields(this);
-			beanGroup.setItemDataSource(stu);
-			return this;
+			try{
+				beanGroup.bindMemberFields(this);
+				beanGroup.setItemDataSource(stu);
+				return this;
+			} catch(Exception e){
+				LOG.info("Exception: " + e);
+				return null;
+			}
 		}
 		
 		public Component layout(){
@@ -105,48 +114,57 @@ public class AddStuMainLayoutFactory {
 		}
 		
 		private void save(){
-			Notification n;
-			if(!isOperationValid()){
-				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
+			if(isOperationInvalid()){
+				blankFieldsErr();
 			} else{
 				saveStu();
 			}
 		}
 		
 		private void saveStu(){
-			Notification n;
 			try{
 				beanGroup.commit();
+				addStuService.saveStu(stu);
+				stuSavedListener.studentSaved();
+				clearFields();
+				successNotification();
 			} catch(CommitException e){
-				n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
-						Type.ERROR_MESSAGE, true);
-				n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-				n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-				n.show(Page.getCurrent());
+				LOG.info("Exception: " + e);
+				blankFieldsErr();
 				return;
 			}
-			addStuService.saveStu(stu);
-			stuSavedListener.studentSaved();
-			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
-			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
-			n.setDelayMsec(Integer.parseInt(Constants.TEN_SECS.getStr()));
-			n.show(Page.getCurrent());
-			clearFields();
 		}
 		
 		public AddStuMainLayout load(){
-			List<University> unis = showAllUnisService.getAllUnis();
-			university.addItems(unis);
-			return this;
+			try{
+				List<University> unis = showAllUnisService.getAllUnis();
+				university.addItems(unis);
+				return this;
+			} catch(Exception e){
+				LOG.info("Exception: " + e);
+				return null;
+			}
 		}
-	}
-	
-	private boolean isOperationValid(){
-		return showAllUnisService.getAllUnis().size() != 0;
+		
+		public void blankFieldsErr(){
+			n = new Notification(Constants.ERROR.getStr(), Constants.BLANK_FIELDS_SAVE_ERROR_DESCRIPTION.getStr(),
+					Type.ERROR_MESSAGE, true);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.setStyleName(ValoTheme.NOTIFICATION_ERROR + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.show(Page.getCurrent());
+		}
+		
+		public void successNotification(){
+			n = new Notification(Constants.SUCCESSFULLY_SAVED.getStr(), Type.WARNING_MESSAGE);
+			n.setStyleName(ValoTheme.NOTIFICATION_SUCCESS + " " + ValoTheme.NOTIFICATION_CLOSABLE);
+			n.setDelayMsec(Integer.parseInt(Constants.NEG_ONE.getStr()));
+			n.show(Page.getCurrent());
+		}
+		
+		private boolean isOperationInvalid(){
+			return showAllUnisService.getAllUnis().size() < 1 || firstName.isEmpty() || lastName.isEmpty() || age.isEmpty()
+					|| gender.isEmpty() || university.isEmpty();
+		}
 	}
 	
 	public Component createComponent(StuSavedListener stuSavedListener){

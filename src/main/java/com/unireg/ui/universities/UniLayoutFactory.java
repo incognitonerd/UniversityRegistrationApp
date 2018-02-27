@@ -1,6 +1,8 @@
 package com.unireg.ui.universities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.unireg.ui.commons.MainUI;
+import com.unireg.ui.commons.HomeUI;
 import com.unireg.utils.Constants;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -9,9 +11,10 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
-//ui tells it which view it belongs to
-@SpringView(name = UniLayoutFactory.NAME, ui = MainUI.class)
+// ui tells it which view it belongs to
+@SpringView(name = UniLayoutFactory.NAME, ui = HomeUI.class)
 public class UniLayoutFactory extends VerticalLayout implements View, UniSavedListener {
+	private static final Logger LOG = LoggerFactory.getLogger(UniLayoutFactory.class);
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "adduniversity";
 	private TabSheet tabSheet;
@@ -36,7 +39,11 @@ public class UniLayoutFactory extends VerticalLayout implements View, UniSavedLi
 	}
 	
 	public void uniSaved(){
-		showUnisFactory.refreshTables();
+		try{
+			showUnisFactory.refreshTables();
+		} catch(Exception e){
+			LOG.info("Exception: " + e);
+		}
 	}
 	
 	public void enter(ViewChangeEvent e){
