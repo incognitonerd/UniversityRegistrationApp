@@ -19,7 +19,7 @@ public enum Constants{
 	PASSWORD("Password"), //
 	SIGN_UP("Sign Up"), //
 	//
-	LOGO_BANNER("../../images/homeHeaderBanner.png"),
+	LOGO_BANNER("../../images/uwfBanner.png"),
 	//
 	STUDENTS_PARENT("STUDENTS"), //
 	STUDENTS_ADD_STUDENT("Add Student"), //
