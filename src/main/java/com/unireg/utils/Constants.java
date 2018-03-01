@@ -19,7 +19,7 @@ public enum Constants{
 	PASSWORD("Password"), //
 	SIGN_UP("Sign Up"), //
 	//
-	LOGO_BANNER("../../images/uwfBanner.png"),
+	LOGO_BANNER("../../images/homeBanner.jpg"),
 	//
 	STUDENTS_PARENT("STUDENTS"), //
 	STUDENTS_ADD_STUDENT("Add Student"), //
@@ -73,7 +73,7 @@ public enum Constants{
 	PASSWORD_TESTER("africa"); //
 	//
 	//
-	//showing george CICD
+	//
 	private final String string;
 	
 	private Constants(String string){
