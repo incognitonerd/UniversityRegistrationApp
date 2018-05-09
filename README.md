@@ -15,18 +15,18 @@ Dev Environment -
 Build Management And Automation Tool -
 * Maven - project management framework for compilation, packaging, simplifies and standardizes a project's build process, a default/standard project structure, dependency management, relies on internet connection. Based on the pom (project object model)  
 
+Wiring the technologies together -  
+* Spring framework for java enterprise projects  - develop enterprise applications using pojos instead of beans, forces programmers to use the best-known practices. Handles instantiating classes (dependency injection).  
+
 Database Connections -
 * Jpa - java persistence api for crud operations and annotations. runs jdbc in the background.    
 * Hibernate - vendor to implement the jpa specifications  
-
-Wiring the technologies together -  
-* Spring framework for java enterprise projects  - develop enterprise applications using pojos instead of beans, forces programmers to use the best-known practices. Handles instantiating classes (dependency injection).  
 
 UI Components -   
 * Vaadin Framework - To build UI related components for web apps. Don't have to worry about html, css or any technologies related to frontend    
 
 Authentication -  
-* Spring Security - Encrypts passwords when adding a user and validates user when signing in
+* Spring Security - Secure URL mapping, password encryption, and user validation
 
 Testing -    
 * Junit - Unit testing  
